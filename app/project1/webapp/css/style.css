@@ -1,0 +1,50 @@
+/* Enter your custom styles here */
+.smallTile {
+    width: 180px !important;   /* tile chhota karne ke liye */
+    height: 100px !important;  /* default se kam */
+    padding: 0.3rem !important;
+}
+
+.selectedCard {
+    border: 2px solid #007aff !important;   /* Blue border */
+    box-shadow: 0 0 10px rgba(0,122,255,0.5);
+    border-radius: 8px;
+}
+
+
+/* Header aur content ke beech ka gap kam karo */
+.smallTile .sapMGTContent {
+    margin-top: 0.2rem !important;   /* default 1rem hota hai */
+}
+
+/* Header chhota */
+.smallTile .sapMGTHeader {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.2rem !important; /* header ke niche ka gap kam */
+}
+
+/* Numeric value aur scale compact */
+.smallTile .sapMNCValue {
+    font-size: 1rem !important;
+    line-height: 1rem !important;
+}
+
+.smallTile .sapMNCScale {
+    font-size: 0.6rem !important;
+}
+
+/* IconTabBar tab text wrap fix */
+.sapMITBText {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    word-wrap: break-word !important;
+    text-align: center !important;
+    max-width: 90px;        /* text ke liye width */
+    line-height: 1.2rem;    /* lines ke bich spacing */
+}
+
+/* Tab item ki height badhao taaki 2 line fit ho jaye */
+.sapMITBFilter {
+    min-height: 4.5rem !important;  /* thoda extra height */
+}
