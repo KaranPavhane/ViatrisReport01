@@ -1,0 +1,16 @@
+ID,batchNo,compCode,pkgSite,packingDate,releaseDate,comments,createdDate,createdAt,createdBy,modifiedAt,modifiedBy,isdel
+eeeeeeee,"B001","C001","SITE-A","2025-09-01","2025-09-02","OK","2025-09-01","2025-09-01T10:00:00Z","admin","2025-09-01T12:00:00Z","user1",false
+ffffffff,"B002","C002","SITE-B","2025-09-03","2025-09-04","Check needed","2025-09-03","2025-09-03T11:00:00Z","admin","2025-09-03T14:00:00Z","user2",false
+aaaaaaaa,"B003","C003","SITE-C","2025-09-05","2025-09-06","Pending approval","2025-09-05","2025-09-05T09:30:00Z","admin","2025-09-05T11:00:00Z","user3",false
+bbbbbbbb,"B004","C004","SITE-D","2025-09-07","2025-09-08","Delayed","2025-09-07","2025-09-07T08:45:00Z","admin","2025-09-07T10:15:00Z","user4",false
+cccccccc,"B005","C005","SITE-E","2025-09-09","2025-09-10","Released successfully","2025-09-09","2025-09-09T07:50:00Z","admin","2025-09-09T09:20:00Z","user5",false
+dddddddd,"B006","C006","SITE-F","2025-09-11","2025-09-12","QC hold","2025-09-11","2025-09-11T10:15:00Z","admin","2025-09-11T12:45:00Z","user6",false
+eeeeffff,"B007","C007","SITE-G","2025-09-13","2025-09-14","Under review","2025-09-13","2025-09-13T11:20:00Z","admin","2025-09-13T13:40:00Z","user7",false
+ffffaaaa,"B008","C008","SITE-H","2025-09-15","2025-09-16","Packaging done","2025-09-15","2025-09-15T09:10:00Z","admin","2025-09-15T11:25:00Z","user8",false
+aaaabbbb,"B009","C009","SITE-I","2025-09-17","2025-09-18","Docs pending","2025-09-17","2025-09-17T08:35:00Z","admin","2025-09-17T10:55:00Z","user9",false
+bbbbcccc,"B010","C010","SITE-J","2025-09-19","2025-09-20","On hold","2025-09-19","2025-09-19T07:45:00Z","admin","2025-09-19T09:30:00Z","user10",false
+ccccdddd,"B011","C011","SITE-K","2025-09-21","2025-09-22","Approval rejected","2025-09-21","2025-09-21T06:30:00Z","admin","2025-09-21T08:40:00Z","user11",false
+ddddeeee,"B012","C012","SITE-L","2025-09-23","2025-09-24","Waiting for QA","2025-09-23","2025-09-23T05:50:00Z","admin","2025-09-23T07:15:00Z","user12",false
+eeeeaaaa,"B013","C013","SITE-M","2025-09-25","2025-09-26","Repacked","2025-09-25","2025-09-25T10:05:00Z","admin","2025-09-25T12:30:00Z","user13",false
+ffffbbbb,"B014","C014","SITE-N","2025-09-27","2025-09-28","Batch merged","2025-09-27","2025-09-27T11:25:00Z","admin","2025-09-27T13:10:00Z","user14",false
+aaaacccc,"B015","C015","SITE-O","2025-09-29","2025-09-30","Closed","2025-09-29","2025-09-29T09:40:00Z","admin","2025-09-29T11:55:00Z","user15",false

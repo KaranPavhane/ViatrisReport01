@@ -1,0 +1,139 @@
+###
+GET http://localhost:4004/odata/v4/document/BatchData
+
+###
+POST http://localhost:4004/odata/v4/document/activityReport
+Content-Type: application/json
+
+{
+  "pkgSites": ["SITE001", "SITE002"],
+  "createdBys": ["USER1", "USER2"]
+}
+
+
+###Requests
+POST http://localhost:4004/odata/v4/document/BatchUpload
+Content-Type: application/json
+
+{
+  "BatchLoad":[
+    {
+        "batchNo": "A21428",
+        "compCode": "2097876",
+        "pkgSite": "33033",
+        "packingDate": "2020-11-30",
+        "releaseDate": "2021-01-29",
+        "comments": ""
+    }
+]
+}
+
+
+###Requests
+POST http://localhost:4004/odata/v4/document/T_PackagingSite
+Content-Type: application/json
+
+{
+  "pkgSite": "PKG001",
+  "pkgSiteName": "Mumbai Packaging Hub",
+  "userId": "Kunal",
+  "status": "Active"
+}
+
+
+###Requests
+POST http://localhost:4004/odata/v4/document/activityReport
+Content-Type: application/json
+
+{
+  "pkgSites" : [ "33033", "56723", "PKG001", "a000002" ],
+  "createdBys" : ["KUNAL", "Kunal", "Riya", "RiyaT", "Tushar", "riya1","user1"]
+}
+
+###Requests
+GET http://localhost:4004/odata/v4/document/GetBatchStats
+
+###Requests
+POST http://localhost:4004/odata/v4/document/M_PackagingSite
+Content-Type: application/json
+
+{
+    "pkgSiteName" : "India"
+}
+
+###Requests
+PUT http://localhost:4004/odata/v4/document/M_PackagingSite(ID='304')
+Content-Type: application/json
+
+{
+    "pkgSiteName" : "Turkey south"
+}
+
+
+###Requests
+POST http://localhost:4004/odata/v4/document/T_PackagingSite
+Content-Type: application/json
+
+{
+    "pkgSite": "PKG001",
+    "pkgSiteName": "Mumbai Packaging Hub",
+    "status": "Active",
+    "Users": [
+      {
+        "userId": "Kunal"
+      },
+      {
+        "userId": "Tushar"
+      },
+      {
+        "userId": "user1"
+      }
+    ]
+  }
+
+###Requests
+PATCH http://localhost:34269/odata/v4/document/T_PackagingSite(ID='2159ba9d-75c6-44c8-8987-01c19f4719cf')
+Content-Type: application/json
+
+{
+    "pkgSite": "PKG001",
+    "pkgSiteName": "Mumbai Packaging Hub",
+    "status": "Active",
+    "Users": [
+      {
+        "ID":"751fcaab-6955-4743-8d04-d37611fd9858",
+        "userId": "Kunal",
+        "isdel" : false
+      },
+       {
+        "ID":"8858111c-46c9-4157-a7fd-67b674089638",
+        "userId": "Tushar",
+        "isdel" : true
+      }
+    ]
+  }
+
+
+###Requests
+GET http://localhost:4004/odata/v4/document/T_PackagingSite?$expand=Users
+
+
+###Request
+GET http://localhost:4004/odata/v4/document/AuditTrial?$filter=createdBy in ('Tushar','Kunal') and createdDate ge '2025-09-11' and createdDate le '2025-09-19'
+
+
+###Requests
+POST http://localhost:4004/odata/v4/document/GetTrackwiseReport
+Content-Type: application/json
+
+{
+  "fromDate":"2025-09-01",
+  "toDate":"2025-09-08"
+}
+
+
+###Requests
+GET http://localhost:4004/odata/v4/trackwise/GetBatchStats
+
+
+

@@ -15,7 +15,7 @@
             <!-- 🔹 Filter Bar -->
             <m:HBox
                 id="filterBar"
-                class="sapUiSmallMarginTop"
+                class="sapUiSmallMarginTop customFilterBarBg"
                 alignItems="Center"
                 justifyContent="SpaceBetween"
             >
@@ -23,19 +23,21 @@
                     class="sapUiContentPadding"
                     width="100%"
                 >
-                    <m:MultiInput
-    id="productInput"
-    placeholder="Enter product"
-    showSuggestion="false"   
-    suggestionItems="{/ProductCollection}"
-    showClearIcon="true"
-    valueHelpRequest=".onProductInputClick"
->
-    <m:suggestionItems>
-        <core:Item text="{Name}" />
-    </m:suggestionItems>
-</m:MultiInput>
+        
 
+                    <m:MultiInput
+                        id="productInput"
+                        placeholder="Enter Packaging Site Code"
+                        showSuggestion="false"
+                        suggestionItems="{/ProductCollection}"
+                        showClearIcon="true"
+                        valueHelpRequest=".onProductInputClick"
+                        width="280px"
+                    >
+                        <m:suggestionItems>
+                            <core:Item text="{Name}" />
+                        </m:suggestionItems>
+                    </m:MultiInput>
                 </l:VerticalLayout>
 
                 <m:HBox alignItems="Center">
@@ -64,7 +66,7 @@
                     />
 
                     <m:Button
-                        text="Go..."
+                        text="Go"
                         press=".onFilterGo"
                         type="Emphasized"
                         class="sapUiSmallMarginBegin"
@@ -81,43 +83,48 @@
             <m:IconTabBar
                 id="cardsRow"
                 select=".onIconTabSelect"
-                class="sapUiResponsiveContentPadding sapUiSmallMarginButtom"
-                visible="false"
+                class="sapUiResponsiveContentPadding sapUiSmallMarginBottom"
+                visible="true"
                 headerMode="Standard"
+                expandable="false"
             >
                 <m:items>
                     <m:IconTabFilter
                         key="summary"
                         icon="sap-icon://business-objects-experience"
-                        text="Summary"
+                        text="Packaging and Release Site Summary Report"
+                        design="Horizontal"
                     />
 
                     <m:IconTabFilter
                         key="track"
                         icon="sap-icon://begin"
                         iconColor="Positive"
-                        text="Track Wise"
+                        text="Track Wise Report"
+                        design="Horizontal"
                     />
 
                     <m:IconTabFilter
                         key="audit"
                         icon="sap-icon://inspect"
                         iconColor="Critical"
-                        text="Audit Trail"
+                        text="Audit Trail Report"
+                        design="Horizontal"
                     />
 
                     <m:IconTabFilter
                         key="activity"
                         icon="sap-icon://activity-items"
                         iconColor="Neutral"
-                        text="Activity"
+                        text="Packaging and Release Site Activity"
+                        design="Horizontal"
                     />
                 </m:items>
             </m:IconTabBar>
 
             <m:VBox
                 id="summaryFilterBar"
-                class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin icons"
                 visible="false"
             >
                 <!-- 🔹 Default filters row + Buttons -->
@@ -131,31 +138,41 @@
                         justifyContent="Start"
                     >
                         <m:Label
-                            text="BatchNo:"
+                            text="Batch No:"
                             class="sapUiTinyMarginEnd"
                         />
                         <m:Input
-                            id="filterBatchNo"
+                            id="filterbatchNo"
                             width="150px"
                             liveChange=".onSummaryFilter"
                         />
 
                         <m:Label
-                            text="Component:"
+                            text="Component Code:"
                             class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
                         />
                         <m:Input
-                            id="filterComponent"
+                            id="filtercompCode"
                             width="150px"
                             liveChange=".onSummaryFilter"
                         />
 
                         <m:Label
-                            text="Site:"
+                            text="Packaging Site:"
                             class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
                         />
                         <m:Input
-                            id="filterSite"
+                            id="filterpkgSite"
+                            width="150px"
+                            liveChange=".onSummaryFilter"
+                        />
+
+                        <m:Label
+                            text="Created By:"
+                            class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                        />
+                        <m:Input
+                            id="filtercreatedBy"
                             width="150px"
                             liveChange=".onSummaryFilter"
                         />
@@ -185,19 +202,17 @@
                 <m:VBox id="filterRows" />
             </m:VBox>
 
-            <!-- 🔹 Track Filters -->
             <m:VBox
                 id="trackFilterBar"
-                class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin icons"
                 visible="false"
             >
-                <!-- 🔹 Default filters row + Buttons -->
                 <m:HBox
                     alignItems="Center"
                     justifyContent="SpaceBetween"
                     class="sapUiTinyMarginBottom"
                 >
-                    <!-- 🔹 Default Filters (left aligned) -->
+                    <!-- 🔹 Default Filters -->
                     <m:HBox
                         alignItems="Center"
                         justifyContent="Start"
@@ -213,7 +228,7 @@
                         />
 
                         <m:Label
-                            text="BatchFirst:"
+                            text="BatchFirstPkg:"
                             class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
                         />
                         <m:Input
@@ -223,7 +238,17 @@
                         />
 
                         <m:Label
-                            text="DateFirst:"
+                            text="BatchFirstRelease:"
+                            class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                        />
+                        <m:Input
+                            id="trackBatchFirstRelease"
+                            width="150px"
+                            liveChange=".onTrackFilter"
+                        />
+
+                        <m:Label
+                            text="DateFirstPkg:"
                             class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
                         />
                         <m:DatePicker
@@ -233,19 +258,9 @@
                             displayFormat="dd/MM/yyyy"
                             change=".onTrackFilter"
                         />
-
-                        <m:Label
-                            text="BatchRelease:"
-                            class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
-                        />
-                        <m:Input
-                            id="trackBatchRelease"
-                            width="150px"
-                            liveChange=".onTrackFilter"
-                        />
                     </m:HBox>
 
-                    <!-- 🔹 Buttons fixed on right -->
+                    <!-- 🔹 Buttons -->
                     <m:HBox
                         alignItems="Center"
                         justifyContent="End"
@@ -269,112 +284,147 @@
                 <m:VBox id="trackFilterRows" />
             </m:VBox>
 
-            <!-- 🔹 Audit Filters -->
-            <m:HBox
+            <m:VBox
                 id="auditFilterBar"
                 class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin"
                 visible="false"
-                alignItems="Center"
-                justifyContent="Start"
             >
-                <m:Label
-                    text="User:"
-                    class="sapUiTinyMarginEnd"
-                />
-                <m:Input
-                    id="auditUser"
-                    width="150px"
-                    liveChange=".onAuditFilter"
-                />
+                <m:HBox
+                    alignItems="Center"
+                    justifyContent="SpaceBetween"
+                >
+                    <!-- Default Filters Row (4 filters) -->
+                    <m:HBox
+                        id="auditDefaultRow"
+                        alignItems="Center"
+                        justifyContent="Start"
+                    >
+                        <m:Label
+                            text="Batch No:"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Input
+                            id="auditBatchNo"
+                            width="150px"
+                            liveChange=".onAuditFilter"
+                        />
 
-                <m:Label
-                    text="Action:"
-                    class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
-                />
-                <m:Input
-                    id="auditAction"
-                    width="150px"
-                    liveChange=".onAuditFilter"
-                />
+                        <m:Label
+                            text="Created By:"
+                            class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                        />
+                        <m:Input
+                            id="auditCreatedBy"
+                            width="150px"
+                            liveChange=".onAuditFilter"
+                        />
 
-                <m:Label
-                    text="Date:"
-                    class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
-                />
-                <m:DatePicker
-                    id="auditDate"
-                    width="150px"
-                    valueFormat="yyyy-MM-dd"
-                    displayFormat="dd/MM/yyyy"
-                    change=".onAuditFilter"
-                />
+                        <m:Label
+                            text="Modified By:"
+                            class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                        />
+                        <m:Input
+                            id="auditModifiedBy"
+                            width="150px"
+                            liveChange=".onAuditFilter"
+                        />
 
-                <m:Label
-                    text="Site:"
-                    class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
-                />
-                <m:Input
-                    id="auditSite"
-                    width="150px"
-                    liveChange=".onAuditFilter"
-                />
+                        <m:Label
+                            text="Comp Code:"
+                            class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                        />
+                        <m:Input
+                            id="auditCompCode"
+                            width="150px"
+                            liveChange=".onAuditFilter"
+                        />
+                    </m:HBox>
 
-                <m:Button
-                    text="Reset"
-                    type="Reject"
-                    class="sapUiTinyMarginBegin"
-                    press=".onAuditFilterReset"
-                />
-            </m:HBox>
+                    <!-- Buttons -->
+                    <m:HBox
+                        alignItems="Center"
+                        justifyContent="End"
+                    >
+                        <m:Button
+                            text="Add Filter"
+                            icon="sap-icon://add-filter"
+                            press=".onAuditAddFilter"
+                            class="sapUiTinyMarginBegin sapUiSmallMarginEnd"
+                        />
+                        <m:Button
+                            text="Reset"
+                            type="Reject"
+                            press=".onAuditFilterReset"
+                            class="sapUiTinyMarginBegin sapUiSmallMarginEnd"
+                        />
+                    </m:HBox>
+                </m:HBox>
+
+                <!-- Dynamic filters rows -->
+                <m:VBox id="auditFilterRows" />
+            </m:VBox>
 
             <!-- 🔹 Activity Filters -->
             <m:HBox
                 id="activityFilterBar"
-                class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin"
+                class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin icons"
                 visible="false"
                 alignItems="Center"
                 justifyContent="Start"
             >
                 <m:Label
-                    text="Site:"
+                    text="Packaging Site:"
                     class="sapUiTinyMarginEnd"
                 />
                 <m:Input
-                    id="activitySite"
-                    width="150px"
+                    id="activityPkgSite"
+                    width="130px"
                     liveChange=".onActivityFilter"
                 />
 
                 <m:Label
-                    text="Detail:"
-                    class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
-                />
-                <m:Input
-                    id="activityDetail"
-                    width="150px"
-                    liveChange=".onActivityFilter"
-                />
-
-                <m:Label
-                    text="CreatedBy:"
+                    text="User:"
                     class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
                 />
                 <m:Input
                     id="activityCreatedBy"
-                    width="150px"
+                    width="130px"
                     liveChange=".onActivityFilter"
                 />
 
                 <m:Label
-                    text="CreatedDate:"
+                    text="Last Activity Date:"
                     class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
                 />
                 <m:DatePicker
-                    id="activityCreatedDate"
-                    width="150px"
+                    id="activityLastActivityDate"
+                    width="130px"
                     valueFormat="yyyy-MM-dd"
                     displayFormat="dd/MM/yyyy"
                     change=".onActivityFilter"
+                />
+
+                <m:Label
+                    text="Today Date:"
+                    class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                />
+                <m:DatePicker
+                    id="activityTodayDate"
+                    width="130px"
+                    valueFormat="yyyy-MM-dd"
+                    displayFormat="dd/MM/yyyy"
+                    change=".onActivityFilter"
+                />
+
+                <m:Label
+                    text="Days From Today:"
+                    class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                />
+                <m:Input
+                    id="activityDaysFromToday"
+                    type="Number"
+                    width="100px"
+                    liveChange=".onActivityFilter"
                 />
 
                 <m:Button
@@ -388,7 +438,7 @@
             <!-- 🔹 Table Container (hidden initially) -->
             <m:VBox
                 id="tableContainer"
-                class="sapUiSmallMarginTop sapUiSmallMarginButtom"
+                class="sapUiSmallMarginTop sapUiSmallMarginButtom icons"
             />
 
             <!-- 🔹 Download Button Row (hidden initially) -->

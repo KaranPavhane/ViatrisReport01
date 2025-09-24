@@ -10,6 +10,7 @@ sap.ui.define([
     return Controller.extend("project1.controller.View1", {
         onInit: function () {
             var oData = {
+                //Packaging Site code
                 ProductCollection: [
                     { Name: "C001" },
                     { Name: "C002" },
@@ -17,63 +18,58 @@ sap.ui.define([
                     { Name: "C004" },
                     { Name: "C005" }
                 ],
-                summary: [
-                    { BatchNo: "B001", Component: "C001", Release: "01/09/2025", Packing: "02/09/2025", Upload: "03/09/2025", Site: "SITE-A", Comment: "OK", CreatedBy: "Admin", ModifiedDate: "04/09/2025", ModifiedBy: "User1" },
-                    { BatchNo: "B002", Component: "C002", Release: "05/09/2025", Packing: "06/09/2025", Upload: "07/09/2025", Site: "SITE-B", Comment: "Done", CreatedBy: "User2", ModifiedDate: "08/09/2025", ModifiedBy: "User3" },
-                    { BatchNo: "B003", Component: "C003", Release: "09/09/2025", Packing: "10/09/2025", Upload: "11/09/2025", Site: "SITE-C", Comment: "Pending", CreatedBy: "User3", ModifiedDate: "12/09/2025", ModifiedBy: "Admin" },
-                    { BatchNo: "B004", Component: "C004", Release: "12/09/2025", Packing: "13/09/2025", Upload: "14/09/2025", Site: "SITE-D", Comment: "Approved", CreatedBy: "User4", ModifiedDate: "15/09/2025", ModifiedBy: "User2" },
-                    { BatchNo: "B005", Component: "C005", Release: "16/09/2025", Packing: "17/09/2025", Upload: "18/09/2025", Site: "SITE-E", Comment: "Rejected", CreatedBy: "Admin", ModifiedDate: "19/09/2025", ModifiedBy: "User5" },
-                    { BatchNo: "B006", Component: "C006", Release: "20/09/2025", Packing: "21/09/2025", Upload: "22/09/2025", Site: "SITE-F", Comment: "OK", CreatedBy: "User6", ModifiedDate: "23/09/2025", ModifiedBy: "User1" },
-                    { BatchNo: "B007", Component: "C007", Release: "21/09/2025", Packing: "22/09/2025", Upload: "23/09/2025", Site: "SITE-G", Comment: "Done", CreatedBy: "User7", ModifiedDate: "24/09/2025", ModifiedBy: "User2" },
-                    { BatchNo: "B008", Component: "C008", Release: "22/09/2025", Packing: "23/09/2025", Upload: "24/09/2025", Site: "SITE-H", Comment: "Pending", CreatedBy: "User8", ModifiedDate: "25/09/2025", ModifiedBy: "User3" },
-                    { BatchNo: "B009", Component: "C009", Release: "23/09/2025", Packing: "24/09/2025", Upload: "25/09/2025", Site: "SITE-I", Comment: "Approved", CreatedBy: "User9", ModifiedDate: "26/09/2025", ModifiedBy: "User4" },
-                    { BatchNo: "B010", Component: "C010", Release: "24/09/2025", Packing: "25/09/2025", Upload: "26/09/2025", Site: "SITE-J", Comment: "Rejected", CreatedBy: "Admin", ModifiedDate: "27/09/2025", ModifiedBy: "User5" },
-                    { BatchNo: "B011", Component: "C011", Release: "25/09/2025", Packing: "26/09/2025", Upload: "27/09/2025", Site: "SITE-K", Comment: "OK", CreatedBy: "User1", ModifiedDate: "28/09/2025", ModifiedBy: "User6" },
-                    { BatchNo: "B012", Component: "C012", Release: "26/09/2025", Packing: "27/09/2025", Upload: "28/09/2025", Site: "SITE-L", Comment: "Done", CreatedBy: "User2", ModifiedDate: "29/09/2025", ModifiedBy: "User7" },
-                    { BatchNo: "B013", Component: "C013", Release: "27/09/2025", Packing: "28/09/2025", Upload: "29/09/2025", Site: "SITE-M", Comment: "Pending", CreatedBy: "User3", ModifiedDate: "30/09/2025", ModifiedBy: "User8" },
-                    { BatchNo: "B014", Component: "C014", Release: "28/09/2025", Packing: "29/09/2025", Upload: "30/09/2025", Site: "SITE-N", Comment: "Approved", CreatedBy: "User4", ModifiedDate: "01/10/2025", ModifiedBy: "User9" },
-                    { BatchNo: "B015", Component: "C015", Release: "29/09/2025", Packing: "30/09/2025", Upload: "01/10/2025", Site: "SITE-O", Comment: "Rejected", CreatedBy: "Admin", ModifiedDate: "02/10/2025", ModifiedBy: "User10" }
-                ],
 
-                track: [
-                    { Component: "C001", BatchFirst: "B001", DateFirst: "01/09/2025", BatchRelease: "BR01", DateRelease: "05/09/2025", BatchLast: "B002", DateLast: "10/09/2025", BatchReleaseLast: "BR02", DateReleaseLast: "12/09/2025" },
-                    { Component: "C002", BatchFirst: "B003", DateFirst: "03/09/2025", BatchRelease: "BR03", DateRelease: "07/09/2025", BatchLast: "B004", DateLast: "11/09/2025", BatchReleaseLast: "BR04", DateReleaseLast: "14/09/2025" },
-                    { Component: "C003", BatchFirst: "B005", DateFirst: "05/09/2025", BatchRelease: "BR05", DateRelease: "09/09/2025", BatchLast: "B006", DateLast: "13/09/2025", BatchReleaseLast: "BR06", DateReleaseLast: "16/09/2025" },
-                    { Component: "C004", BatchFirst: "B007", DateFirst: "07/09/2025", BatchRelease: "BR07", DateRelease: "10/09/2025", BatchLast: "B008", DateLast: "15/09/2025", BatchReleaseLast: "BR08", DateReleaseLast: "18/09/2025" }
-                ],
+                summary: [],
 
-                audit: [
-                    { User: "Admin", Action: "Login", Date: "15/09/2025", Site: "SITE-A" },
-                    { User: "User1", Action: "Approve", Date: "16/09/2025", Site: "SITE-B" },
-                    { User: "User2", Action: "Reject", Date: "17/09/2025", Site: "SITE-C" },
-                    { User: "User3", Action: "Modify", Date: "18/09/2025", Site: "SITE-D" },
-                    { User: "User4", Action: "Delete", Date: "19/09/2025", Site: "SITE-E" }
-                ],
+                track: [],
 
-                activity: [
-                    { Site: "SITE-A", Detail: "Packaging Started", CreatedBy: "User1", CreatedDate: "12/09/2025" },
-                    { Site: "SITE-B", Detail: "Batch Released", CreatedBy: "User2", CreatedDate: "13/09/2025" },
-                    { Site: "SITE-C", Detail: "Quality Check Done", CreatedBy: "User3", CreatedDate: "14/09/2025" },
-                    { Site: "SITE-D", Detail: "Sent to Market", CreatedBy: "User4", CreatedDate: "15/09/2025" },
-                    { Site: "SITE-E", Detail: "Batch Closed", CreatedBy: "Admin", CreatedDate: "16/09/2025" }
-                ]
+                audit: [],
 
+                activity: []
             };
 
-            var oModel = new JSONModel(oData);
+            // Reports
+            this._reportTitles = {
+                summary: "Packaging and Release Site Summary Report",
+                track: "Track Wise Report",
+                audit: "Audit Trail Report",
+                activity: "Packaging and Release Site Activity"
+            };
+
+            // column Mapping 
+            this._columnMapping = {
+                batchNo: "Batch No.",
+                comments: "Comments",
+                compCode: "Componant Code",
+                createdAt: "CreatedAt",
+                createdBy: "CreatedBy",
+                createdDate: "CreatedDate",
+                modifiedAt: "ModifiedAt",
+                modifiedBy: "ModifiedBy",
+                packingDate: "PackingDate",
+                pkgSite: "PackagingSite",
+                releaseDate: "ReleaseDate",
+                packagingSiteID: "PackagingSiteID",
+                user: "User",
+                lastActivityDate: "LastActivityDate",
+                todayDate: "TodayDate",
+                daysFromToday: "DaysFromToday"
+            };
+
+            // Hide column to showing in table
+            this._ignoredColumns = ["ID", "isdel"];
+
+            var oModel = new sap.ui.model.json.JSONModel(oData);
             this.getView().setModel(oModel);
 
             this._currentKey = null;
             this._oSelectedCard = null;
 
-            // 🔹 Page load pe sirf input/filter bar dikhna chahiye
+            // on load page only filterbar showing 
             this.byId("filterBar").setVisible(true);
             this.byId("cardsRow").setVisible(false);
             this.byId("tableContainer").setVisible(false);
             this.byId("downloadRow").setVisible(false);
-
-
-
         },
 
         onProductInputClick: function (oEvent) {
@@ -83,22 +79,26 @@ sap.ui.define([
             var aItems = oMultiInput.getSuggestionItems();
 
             if (aItems.length > 0) {
-                oMultiInput.setShowSuggestion(true);   // enable
-                oMultiInput.openSuggestions();         // force open
+                oMultiInput.setShowSuggestion(true);  
+                oMultiInput.openSuggestions();        
             }
         },
 
         onFilterGo: function () {
-            // 🟢 DatePicker se directly Date object lo
+
             var oFrom = this.byId("fromDate").getDateValue();
             var oTo = this.byId("toDate").getDateValue();
 
             if (!oFrom || !oTo) {
-                MessageToast.show("Please select both From and To dates");
+                sap.m.MessageToast.show("Please select both From and To dates");
                 return;
             }
 
-            // Include full end date
+            if (oFrom > oTo) {
+                sap.m.MessageToast.show("From Date cannot be greater than To Date");
+                return;
+            }
+
             oTo.setHours(23, 59, 59, 999);
 
             var oModel = this.getView().getModel();
@@ -107,64 +107,119 @@ sap.ui.define([
 
             this._filteredData = {};
 
-            // 🔹 Summary Data Filter
-            this._filteredData.summary = (oData.summary || []).filter(function (oItem) {
-                var dValue = that._parseDate(oItem.Release) || that._parseDate(oItem.Packing);
-                return dValue && dValue >= oFrom && dValue <= oTo;
+            $.ajax({
+                url: "/odata/v4/document/BatchData",
+                method: "GET",
+                contentType: "application/json",
+                success: function (oResponse) {
+                    var aSummary = oResponse.value || [];
+
+                    console.log("✅ BatchData (Summary):", aSummary);
+
+                    var oModel = that.getView().getModel();
+                    oModel.setProperty("/summary", aSummary);
+
+                    that._filteredData.summary = aSummary;
+
+                    if (that._currentKey === "summary") {
+                        that._createTable("summary", aSummary);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("❌ Error loading BatchData:", status, error);
+                    console.error("Response:", xhr.responseText);
+
+                    // fallback empty set
+                    var oModel = that.getView().getModel();
+                    oModel.setProperty("/summary", []);
+                    that._filteredData.summary = [];
+                }
             });
 
-            // 🔹 Track Data Filter
-            this._filteredData.track = (oData.track || []).filter(function (oItem) {
-                var dValue =
-                    that._parseDate(oItem.DateFirst) ||
-                    that._parseDate(oItem.DateRelease) ||
-                    that._parseDate(oItem.DateLast) ||
-                    that._parseDate(oItem.DateReleaseLast);
-                return dValue && dValue >= oFrom && dValue <= oTo;
+            //Get Trackwise Report 
+            $.ajax({
+                url: "/odata/v4/document/GetTrackwiseReport",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    fromDate: oFrom.toISOString().split("T")[0],
+                    toDate: oTo.toISOString().split("T")[0]
+                }),
+                success: function (res) {
+                    var aTrack = res.results || [];
+                    that.getView().getModel().setProperty("/track", aTrack);
+                    that._filteredData.track = aTrack;
+                    console.log("Trackwise Report:", aTrack);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error:", status, error);
+                    console.error("Response:", xhr.responseText);
+                    that._filteredData.track = [];
+                }
             });
 
-            // 🔹 Audit Data Filter
-            this._filteredData.audit = (oData.audit || []).filter(function (oItem) {
-                var dValue = that._parseDate(oItem.Date);
-                return dValue && dValue >= oFrom && dValue <= oTo;
+            // Audit and Activity Data fetch
+            $.ajax({
+                url: "/odata/v4/document/AuditTrial",
+                method: "GET",
+                contentType: "application/json",
+                context: this,
+                success: function (res) {
+                    var aAudit = res.value || [];
+                    this.getView().getModel().setProperty("/audit", aAudit);
+                    this._filteredData.audit = aAudit;
+
+                    console.log("✅ Audit Data:", aAudit);
+
+                    var aPkgSites = [...new Set(aAudit.map(item => item.pkgSite).filter(Boolean))];
+                    var aCreatedBys = [...new Set(aAudit.map(item => item.createdBy).filter(Boolean))];
+
+                    $.ajax({
+                        url: "/odata/v4/document/activityReport",
+                        method: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            pkgSites: aPkgSites,
+                            createdBys: aCreatedBys
+                        }),
+                        context: this,
+                        success: function (oData) {
+                            console.log("✅ Activity Report Response:", oData);
+
+                            this._filteredData.activity = oData.value || oData;
+
+                            var oLocalModel = new sap.ui.model.json.JSONModel(this._filteredData);
+                            this.getView().setModel(oLocalModel, "local");
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("❌ Activity Report call failed:", xhr.responseText);
+                            this._filteredData.activity = [];
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("❌ Error fetching AuditTrial:", status, error);
+                    console.error("Response:", xhr.responseText);
+                    this._filteredData.audit = [];
+                }
             });
 
-            // 🔹 Activity Data Filter
-            this._filteredData.activity = (oData.activity || []).filter(function (oItem) {
-                var dValue = that._parseDate(oItem.CreatedDate);
-                return dValue && dValue >= oFrom && dValue <= oTo;
-            });
-
-            // 🔹 Default tab = summary
+            // Default tab --> summary
             this._currentKey = "summary";
-
             this.byId("cardsRow").setVisible(true);
+            this.byId("cardsRow").setSelectedKey("summary");
             this.byId("tableContainer").setVisible(true);
             this.byId("downloadRow").setVisible(true);
 
-            // --- Default table show karo ---
             this._createTable("summary", this._filteredData.summary);
 
-            // --- Default card highlight karo ---
-            var oDefaultCard = this.byId("summaryCardId"); // XML me id hona chahiye
-            if (oDefaultCard) {
-                if (this._oSelectedCard) {
-                    this._oSelectedCard.removeStyleClass("selectedCard");
-                }
-                this._oSelectedCard = oDefaultCard;
-                oDefaultCard.addStyleClass("selectedCard");
-            }
-
-            // --- Sab filter bars pehle hide karo ---
             this.byId("summaryFilterBar").setVisible(false);
             this.byId("trackFilterBar").setVisible(false);
             this.byId("auditFilterBar").setVisible(false);
             this.byId("activityFilterBar").setVisible(false);
 
-            // --- Sirf summary ke filters dikhao ---
             this.byId("summaryFilterBar").setVisible(true);
         },
-
 
         _parseDate: function (sDate) {
             if (!sDate) return null;
@@ -173,32 +228,28 @@ sap.ui.define([
             return new Date(parts[2], parts[1] - 1, parts[0]);
         },
 
+        // after click on reset button
         onFilterReset: function () {
-            // 🔹 Product MultiInput reset
+
             this.byId("productInput").removeAllTokens();
 
-            // 🔹 From/To date reset (ab input hain, DatePicker nahi)
             this.byId("fromDate").setValue("");
             this.byId("toDate").setValue("");
 
-            // 🔹 Hide containers
             this.byId("cardsRow").setVisible(false);
             this.byId("tableContainer").setVisible(false);
             this.byId("downloadRow").setVisible(false);
 
-            // 🔹 Hide all filter bars
             this.byId("summaryFilterBar").setVisible(false);
             this.byId("trackFilterBar").setVisible(false);
             this.byId("auditFilterBar").setVisible(false);
             this.byId("activityFilterBar").setVisible(false);
 
-            // 🔹 Clear secondary filters (agar inputs hain to setValue(""))
             this.byId("filterBatchNo").setValue("");
             this.byId("filterComponent").setValue("");
             this.byId("filterSite").setValue("");
             this.byId("filterCreatedBy").setValue("");
 
-            // 🔹 Agar track/audit/activity filters bhi input me convert kiye ho to unka reset bhi:
             if (this.byId("trackComponent")) this.byId("trackComponent").setValue("");
             if (this.byId("trackBatchFirst")) this.byId("trackBatchFirst").setValue("");
             if (this.byId("trackDateFirst")) this.byId("trackDateFirst").setValue("");
@@ -214,11 +265,11 @@ sap.ui.define([
             if (this.byId("activityCreatedBy")) this.byId("activityCreatedBy").setValue("");
             if (this.byId("activityCreatedDate")) this.byId("activityCreatedDate").setValue("");
 
-            // 🔹 Reset data + current key
             this._filteredData = null;
             this._currentKey = null;
         },
 
+        // select icon Tabs
         onIconTabSelect: function (oEvent) {
             var sKey = oEvent.getParameter("key");
             this._currentKey = sKey;
@@ -228,25 +279,36 @@ sap.ui.define([
             this.byId("auditFilterBar").setVisible(false);
             this.byId("activityFilterBar").setVisible(false);
 
+            var oModel = this.getView().getModel();
+            var aData = [];
+
             if (sKey === "summary") {
                 this.byId("summaryFilterBar").setVisible(true);
+                aData = oModel.getProperty("/summary") || [];
+
             } else if (sKey === "track") {
                 this.byId("trackFilterBar").setVisible(true);
+                aData = (this._filteredData && this._filteredData.track)
+                    ? this._filteredData.track
+                    : (oModel.getProperty("/track") || []);
+
             } else if (sKey === "audit") {
                 this.byId("auditFilterBar").setVisible(true);
+                aData = (this._filteredData && this._filteredData.audit)
+                    ? this._filteredData.audit
+                    : (oModel.getProperty("/audit") || []);
+
             } else if (sKey === "activity") {
                 this.byId("activityFilterBar").setVisible(true);
+                aData = (this._filteredData && this._filteredData.activity)
+                    ? this._filteredData.activity
+                    : (oModel.getProperty("/activity") || []);
             }
-
-            // 🔹 Table reload logic
-            var oModel = this.getView().getModel();
-            var aData = (this._filteredData && this._filteredData[sKey])
-                ? this._filteredData[sKey]
-                : oModel.getData()[sKey];
 
             this._createTable(sKey, aData);
         },
 
+        // after click on cards set Visible true
         onCardPress: function (oEvent) {
             // ✅ IconTabBar se key directly aata hai
             var sKey = oEvent.getParameter("key");
@@ -264,31 +326,36 @@ sap.ui.define([
             this._createTable(sKey, aData);
         },
 
+        // Create Table
         _createTable: function (sKey, aData) {
             var that = this;
+
+            var sTitle = this._reportTitles[sKey] || (sKey.toUpperCase() + " Data");
 
             var oTable = new sap.ui.table.Table({
                 title: new sap.m.Toolbar({
                     content: [
-                        new sap.m.Title({ text: sKey.toUpperCase() + " Data", level: "H3" }),
+                        new sap.m.Title({ text: sTitle, level: "H3" }),
                         new sap.m.ToolbarSpacer(),
                         new sap.m.Button({
                             text: "Download",
                             icon: "sap-icon://download",
                             type: "Ghost",
-                            press: that.onDownloadPress ? that.onDownloadPress.bind(that) : function () {
-                                sap.m.MessageToast.show("Download pressed");
+                            press: function (oEvent) {
+                                that._currentKey = sKey;
+                                that.onDownloadPress(oEvent);
                             }
                         })
                     ]
                 }),
-                visibleRowCountMode: "Auto",   // 👈 Auto adjust rows
-                minAutoRowCount: 10,            // 👈 kam se kam 1 row
-                maxAutoRowCount: 40,           // 👈 jyada se jyada 10 row
+                visibleRowCountMode: "Fixed",
+                visibleRowCount: 8,
+                minAutoRowCount: 5,
                 columnHeaderVisible: true,
                 selectionMode: "None",
                 enableColumnReordering: true,
-                width: "100%"
+                width: "100%",   // ✅ Full width
+                rowHeight: 15
             });
 
             if (!aData || aData.length === 0) {
@@ -304,31 +371,57 @@ sap.ui.define([
 
             var aKeys = Object.keys(aData[0]);
             aKeys.forEach(function (sColKey) {
-                oTable.addColumn(new sap.ui.table.Column({
-                    label: new sap.m.Label({ text: sColKey }),
-                    sortProperty: sColKey,           // 👉 Sorting enable
-                    showSortMenuEntry: true,         // 👉 Context menu me sorting options
-                    showFilterMenuEntry: false,      // 👉 Filter option hide
-                    autoResizable: true,
-                    template: new sap.m.Text({ text: "{" + sColKey + "}" })
-                }));
+                if (that._ignoredColumns && that._ignoredColumns.includes(sColKey)) {
+                    return;
+                }
+
+                var sColLabel = that._columnMapping[sColKey] || sColKey;
+
+                var oColumn = new sap.ui.table.Column({
+                    label: new sap.m.Label({ text: sColLabel }),
+                    sortProperty: sColKey,
+                    showSortMenuEntry: true,
+                    showFilterMenuEntry: false,
+                    template: new sap.m.Text({ text: "{" + sColKey + "}", wrapping: true })
+                });
+
+                oTable.addColumn(oColumn);
             });
 
             var oModel = new sap.ui.model.json.JSONModel({ rows: aData });
             oTable.setModel(oModel);
             oTable.bindRows("/rows");
 
+            // ✅ Equal column width adjustment after rendering
+            oTable.attachEventOnce("rowsUpdated", function () {
+                setTimeout(function () {
+                    var iTableWidth = oTable.$().width();
+                    var aColumns = oTable.getColumns();
+                    var iColCount = aColumns.length;
+
+                    if (iColCount > 0 && iTableWidth > 0) {
+                        var iEqualWidth = Math.floor(iTableWidth / iColCount) + "px";
+
+                        aColumns.forEach(function (oCol) {
+                            oCol.setWidth(iEqualWidth);
+                        });
+                    }
+                }, 200);
+            });
+
             this.byId("tableContainer").removeAllItems();
-            oTable.addStyleClass("sapUiMediumMarginBottom");
+            oTable.addStyleClass("customDataTable");
             this.byId("tableContainer").addItem(oTable);
         },
 
+        // showing select option for download 
         onDownloadPress: function (oEvent) {
             var that = this;
             if (!this._currentKey) {
                 sap.m.MessageToast.show("Please select a card first");
                 return;
             }
+
             if (!this._oActionSheet) {
                 this._oActionSheet = new sap.m.ActionSheet({
                     placement: sap.m.PlacementType.Top,
@@ -348,42 +441,53 @@ sap.ui.define([
                     ]
                 });
             }
-            this._oActionSheet.openBy(oEvent.getSource());
+            this._oActionSheet.openBy(oEvent.getSource()); // ✅ button ke upar ActionSheet open hoga
         },
 
+        // Get Current Table Data
         _getCurrentTableData: function () {
             if (!this._currentKey) return [];
 
-            var oTable = this.byId("tableContainer").getItems()[0]; // 👈 container me pehla table lo
+            var oTable = this.byId("tableContainer").getItems()[0];
             if (!oTable) return [];
 
             var oBinding = oTable.getBinding("rows");
             if (!oBinding) return [];
 
-            // ✅ Binding ke current contexts (filtered + sorted + paginated data)
             return oBinding.getContexts().map(function (oContext) {
                 return oContext.getObject();
             });
         },
 
+        // after click on download button
         _downloadFile: function (sType) {
-            var aData = this._getCurrentTableData();  // ✅ ab correct source se data aayega
+            var aData = this._getCurrentTableData();
             if (!aData || aData.length === 0) {
                 sap.m.MessageToast.show("No data to download");
                 return;
             }
+            var sTitle = this._reportTitles[this._currentKey] || (this._currentKey.toUpperCase() + " Report");
+
             if (sType === "csv") {
-                this._exportCSV(aData);
+                this._exportCSV(aData, sTitle);
             } else if (sType === "excel") {
-                this._exportExcel(aData);
+                this._exportExcel(aData, sTitle);
             } else if (sType === "pdf") {
-                this._exportPDF(aData);
+                this._exportPDF(aData, sTitle);
             }
         },
 
-        _exportCSV: function (aData) {
-            var aCols = Object.keys(aData[0]);
-            var sCsv = aCols.join(",") + "\n";
+        //Download as CSV
+        _exportCSV: function (aData, sTitle) {
+            var that = this;
+            var aCols = Object.keys(aData[0]).filter(function (key) {
+                return !(that._ignoredColumns && that._ignoredColumns.includes(key));
+            });
+
+            var aHeaders = aCols.map(function (key) {
+                return that._columnMapping[key] || key;
+            });
+            var sCsv = aHeaders.join(",") + "\n";
 
             aData.forEach(function (oRow) {
                 var aVals = aCols.map(function (key) { return oRow[key]; });
@@ -393,14 +497,22 @@ sap.ui.define([
             var blob = new Blob([sCsv], { type: "text/csv;charset=utf-8;" });
             var link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = this._currentKey + ".csv";
+            link.download = sTitle + ".csv";
             link.click();
         },
 
-        _exportExcel: function (aData) {
-            var aCols = Object.keys(aData[0]);
-            var sExcel = '<table><tr>';
-            aCols.forEach(function (col) { sExcel += "<th>" + col + "</th>"; });
+        // Download as Excel
+        _exportExcel: function (aData, sTitle) {
+            var that = this;
+            var aCols = Object.keys(aData[0]).filter(function (key) {
+                return !(that._ignoredColumns && that._ignoredColumns.includes(key));
+            });
+
+            var sExcel = '<table border="1"><tr>';
+            aCols.forEach(function (col) {
+                var sLabel = that._columnMapping[col] || col;
+                sExcel += "<th>" + sLabel + "</th>";
+            });
             sExcel += "</tr>";
 
             aData.forEach(function (oRow) {
@@ -415,50 +527,151 @@ sap.ui.define([
             var blob = new Blob([sExcel], { type: "application/vnd.ms-excel" });
             var link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = this._currentKey + ".xls";
+            link.download = sTitle + ".xls";
             link.click();
         },
 
-        _exportPDF: function (aData) {
-            var aCols = Object.keys(aData[0]);
-            var sHtml = "<h3>" + this._currentKey.toUpperCase() + " Report</h3>" +
-                "<table border='1' style='border-collapse:collapse;width:100%'><tr>";
+        // Download as PDF
+        _exportPDF: function (aData, sTitle) {
+            var that = this;
+            if (!aData || !aData.length) { return; }
 
-            aCols.forEach(function (col) { sHtml += "<th>" + col + "</th>"; });
-            sHtml += "</tr>";
+            function escHtml(str) {
+                if (str === null || str === undefined) return "";
+                return String(str)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#39;");
+            }
+
+            var aCols = Object.keys(aData[0]).filter(function (key) {
+                return !(that._ignoredColumns && that._ignoredColumns.includes(key));
+            });
+
+            var sLogoPath = sap.ui.require.toUrl("project1/img/logo-design.webp");
+            var sBgPath = sap.ui.require.toUrl("project1/img/jj-ying-7JX0-bfiuxQ-unsplash.jpg");
+
+            // Table build
+            var sTable = "<table><thead><tr>";
+            aCols.forEach(function (col) {
+                var sLabel = that._columnMapping && that._columnMapping[col] ? that._columnMapping[col] : col;
+                sTable += "<th>" + escHtml(sLabel) + "</th>";
+            });
+            sTable += "</tr></thead><tbody>";
 
             aData.forEach(function (oRow) {
-                sHtml += "<tr>";
+                sTable += "<tr>";
                 aCols.forEach(function (key) {
-                    sHtml += "<td>" + (oRow[key] || "") + "</td>";
+                    sTable += "<td>" + escHtml(oRow[key] || "") + "</td>";
                 });
-                sHtml += "</tr>";
+                sTable += "</tr>";
             });
-            sHtml += "</table>";
+            sTable += "</tbody></table>";
 
-            var win = window.open("", "_blank");
-            win.document.write("<html><head><title>Report</title></head><body>" + sHtml + "</body></html>");
-            win.print(); // Browser print → Save as PDF option
+            var sStyle = `
+        <style>
+            @page { size: A4 landscape; margin: 0; }
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            body {
+                margin: 0;
+                padding: 20px;
+                box-sizing: border-box;
+                position: relative;
+            }
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background-image: url('${sBgPath}');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                z-index: -1;
+            }
+            .container { width:100%; }
+            .header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+            .header h3 { margin:0; font-size:20px; }
+            .logo { height:60px; }
+            table { width:100%; border-collapse: collapse; background: transparent; }
+            thead th { font-weight:bold; }
+            th, td {
+                border:1px solid #000;
+                padding:6px 8px;
+                background: transparent !important;
+                color: #000;
+                word-wrap: break-word;
+                white-space: normal;
+            }
+            tr { page-break-inside: avoid; }
+        </style>
+        `;
+
+            var sHeaderHtml = '<div class="header">' +
+                '<h3>' + escHtml(sTitle) + '</h3>' +
+                '<img class="logo" src="' + sLogoPath + '" alt="Logo" />' +
+                '</div>';
+
+            var fullHtml = "<!doctype html><html><head><meta charset='utf-8'><title>" + escHtml(sTitle) + "</title>" + sStyle + "</head><body>" +
+                "<div class='container'>" + sHeaderHtml + sTable + "</div>" +
+                "</body></html>";
+
+            // ✅ Create hidden iframe
+            var iframe = document.createElement('iframe');
+            iframe.style.position = "fixed";
+            iframe.style.right = "0";
+            iframe.style.bottom = "0";
+            iframe.style.width = "0";
+            iframe.style.height = "0";
+            iframe.style.border = "0";
+            document.body.appendChild(iframe);
+
+            // Write content to iframe
+            iframe.contentDocument.open();
+            iframe.contentDocument.write(fullHtml);
+            iframe.contentDocument.close();
+
+            // Print after small delay
+            setTimeout(function () {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+
+                // remove iframe after print (cleanup)
+                setTimeout(function () {
+                    document.body.removeChild(iframe);
+                }, 2000);
+            }, 700);
         },
 
-        // ---------------- SUMMARY FILTERS ----------------
 
+        // ---------------- SUMMARY FILTERS ----------------
         onAddFilterPress: function (oEvent) {
             var that = this;
 
             if (!this._oFilterSheet) {
+                var aFields = [
+                    "releaseDate", "packingDate", "createdDate", "createdAt", "modifiedAt",
+                    "comments", "modifiedBy"
+                ];
+
+                var aButtons = aFields.map(function (sField) {
+                    return new sap.m.Button({
+                        text: sField,
+                        press: function () { that._addFilterField(sField); }
+                    });
+                });
+
                 this._oFilterSheet = new sap.m.ActionSheet({
                     title: "Add Filter",
                     showCancelButton: true,
-                    buttons: [
-                        new sap.m.Button({ text: "Release", press: function () { that._addFilterField("Release"); } }),
-                        new sap.m.Button({ text: "Packing", press: function () { that._addFilterField("Packing"); } }),
-                        new sap.m.Button({ text: "Upload", press: function () { that._addFilterField("Upload"); } }),
-                        new sap.m.Button({ text: "Comment", press: function () { that._addFilterField("Comment"); } }),
-                        new sap.m.Button({ text: "ModifiedDate", press: function () { that._addFilterField("ModifiedDate"); } }),
-                        new sap.m.Button({ text: "ModifiedBy", press: function () { that._addFilterField("ModifiedBy"); } }),
-                        new sap.m.Button({ text: "CreatedBy", press: function () { that._addFilterField("CreatedBy"); } })
-                    ]
+                    buttons: aButtons
                 });
                 this.getView().addDependent(this._oFilterSheet);
             }
@@ -469,31 +682,29 @@ sap.ui.define([
             this._summaryDynamicFilters = this._summaryDynamicFilters || {};
 
             if (this._summaryDynamicFilters[sField]) {
-                sap.m.MessageToast.show(sField + " filter already added");
+                sap.m.MessageToast.show((this._columnMapping[sField] || sField) + " filter already added");
                 return;
             }
 
             var sFullId = this.getView().createId("filter" + sField);
 
             var oLabel = new sap.m.Label({
-                text: sField + ":"
-            }).addStyleClass(" sapUiTinyMarginEnd");
+                text: (this._columnMapping[sField] || sField) + ":"
+            }).addStyleClass("sapUiTinyMarginEnd");
 
             var oControl;
+            var aDateFields = ["releaseDate", "packingDate", "createdDate", "modifiedAt", "createdAt"];
 
-            // ✅ Agar Date field hai to DatePicker banao
-            var aDateFields = ["Release", "Packing", "Upload", "ModifiedDate"];
             if (aDateFields.includes(sField)) {
                 oControl = new sap.m.DatePicker({
                     id: sFullId,
                     width: "150px",
-                    valueFormat: "yyyy-MM-dd",   // backend/compare ke liye
-                    displayFormat: "dd/MM/yyyy", // user ko show karne ke liye
+                    valueFormat: "yyyy-MM-dd",
+                    displayFormat: "dd/MM/yyyy",
                     change: this.onSummaryFilter.bind(this)
                 }).addStyleClass("sapUiTinyMarginEnd")
                     .data("field", sField);
             } else {
-                // Text field
                 oControl = new sap.m.Input({
                     id: sFullId,
                     width: "150px",
@@ -515,7 +726,6 @@ sap.ui.define([
                 });
                 oFilterRows.addItem(oLastRow);
             }
-
             oLastRow.addItem(oLabel);
             oLastRow.addItem(oControl);
         },
@@ -530,14 +740,32 @@ sap.ui.define([
             var aFiltered = aSource.filter(function (oItem) {
                 var bMatch = true;
 
-                // default filters (XML inputs)
-                var aDefaultKeys = ["BatchNo", "Component", "Site", "CreatedBy"];
-                aDefaultKeys.forEach(function (sKey) {
+                // 🔹 Loop over all filter inputs (default + dynamic)
+                var oAllFilters = Object.assign({}, that._summaryDynamicFilters || {});
+
+                // default filters bhi include kar do
+                ["batchNo", "compCode", "pkgSite", "createdBy", "comments", "modifiedBy"].forEach(function (sKey) {
                     var oInput = that.byId("filter" + sKey);
                     if (oInput) {
-                        var sVal = (oInput.getValue() || "").toLowerCase();
+                        oAllFilters[sKey] = oInput;
+                    }
+                });
+
+                // 🔹 Apply all filters
+                Object.keys(oAllFilters).forEach(function (sField) {
+                    var oControl = oAllFilters[sField];
+                    if (oControl instanceof sap.m.DatePicker) {
+                        var oVal = oControl.getDateValue();
+                        if (oVal) {
+                            var dField = that._parseDate(oItem[sField]);
+                            if (!dField || dField.toDateString() !== oVal.toDateString()) {
+                                bMatch = false;
+                            }
+                        }
+                    } else {
+                        var sVal = (oControl.getValue() || "").toLowerCase();
                         if (sVal) {
-                            var sFieldVal = (oItem[sKey] || "").toLowerCase();
+                            var sFieldVal = (oItem[sField] || "").toLowerCase();
                             if (!sFieldVal.includes(sVal)) {
                                 bMatch = false;
                             }
@@ -545,33 +773,6 @@ sap.ui.define([
                     }
                 });
 
-                // ✅ dynamic filters
-                if (that._summaryDynamicFilters) {
-                    Object.keys(that._summaryDynamicFilters).forEach(function (sField) {
-                        var oControl = that._summaryDynamicFilters[sField];
-                        if (oControl) {
-                            // Agar DatePicker hai
-                            if (oControl instanceof sap.m.DatePicker) {
-                                var oVal = oControl.getDateValue(); // Date object
-                                if (oVal) {
-                                    var dField = that._parseDate(oItem[sField]);
-                                    if (!dField || dField.toDateString() !== oVal.toDateString()) {
-                                        bMatch = false;
-                                    }
-                                }
-                            } else {
-                                // Input (text)
-                                var sVal = (oControl.getValue() || "").toLowerCase();
-                                if (sVal) {
-                                    var sFieldVal = (oItem[sField] || "").toLowerCase();
-                                    if (!sFieldVal.includes(sVal)) {
-                                        bMatch = false;
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
                 return bMatch;
             });
 
@@ -581,20 +782,17 @@ sap.ui.define([
         onSummaryFilterReset: function () {
             var that = this;
 
-            // reset default inputs (XML ones)
-            ["BatchNo", "Component", "Site", "CreatedBy"].forEach(function (sKey) {
+            ["batchNo", "compCode", "pkgSite", "createdBy", "comments", "modifiedBy"].forEach(function (sKey) {
                 var oInput = that.byId("filter" + sKey);
                 if (oInput) {
                     oInput.setValue("");
                 }
             });
 
-            // ✅ destroy dynamic filters completely
             var oFilterRows = this.byId("filterRows");
-            oFilterRows.destroyItems();   // puri tarah remove + destroy
-            this._summaryDynamicFilters = {}; // clear references
+            oFilterRows.destroyItems();
+            this._summaryDynamicFilters = {};
 
-            // refresh table data
             var aSource = (this._filteredData && this._filteredData.summary) ?
                 this._filteredData.summary :
                 (this.getView().getModel() && this.getView().getModel().getData().summary) || [];
@@ -611,11 +809,10 @@ sap.ui.define([
                     title: "Add Filter",
                     showCancelButton: true,
                     buttons: [
-                        new sap.m.Button({ text: "DateRelease", press: function () { that._addTrackFilterField("DateRelease"); } }),
-                        new sap.m.Button({ text: "BatchLast", press: function () { that._addTrackFilterField("BatchLast"); } }),
-                        new sap.m.Button({ text: "DateLast", press: function () { that._addTrackFilterField("DateLast"); } }),
-                        new sap.m.Button({ text: "BatchReleaseLast", press: function () { that._addTrackFilterField("BatchReleaseLast"); } }),
-                        new sap.m.Button({ text: "DateReleaseLast", press: function () { that._addTrackFilterField("DateReleaseLast"); } })
+                        new sap.m.Button({ text: "Date of Last Packaging", press: function () { that._addTrackFilterField("Date of Last Packaging"); } }),
+                        new sap.m.Button({ text: "Date of Last Release", press: function () { that._addTrackFilterField("Date of Last Release"); } }),
+                        new sap.m.Button({ text: "Batch No. of Last Packaging", press: function () { that._addTrackFilterField("Batch No. of Last Packaging"); } }),
+                        new sap.m.Button({ text: "Batch No. of Last Release", press: function () { that._addTrackFilterField("Batch No. of Last Release"); } })
                     ]
                 });
                 this.getView().addDependent(this._oTrackFilterSheet);
@@ -632,21 +829,25 @@ sap.ui.define([
                 return;
             }
 
-            var sFullId = this.getView().createId("track" + sField);
+            var sFullId = this.getView().createId("track" + sField.replace(/\s+/g, "")); // spaces remove
 
             var oLabel = new sap.m.Label({ text: sField + ":" })
                 .addStyleClass("sapUiTinyMarginBegin sapUiTinyMarginEnd");
 
             var oControl;
-            // ✅ Date fields list
-            var aDateFields = ["DateRelease", "DateLast", "DateReleaseLast"];
+            var aDateFields = [
+                "Date of First Packaging",
+                "Date of First Release",
+                "Date of Last Packaging",
+                "Date of Last Release"
+            ];
 
             if (aDateFields.includes(sField)) {
                 oControl = new sap.m.DatePicker({
                     id: sFullId,
                     width: "150px",
-                    valueFormat: "yyyy-MM-dd",   // backend storage
-                    displayFormat: "dd/MM/yyyy", // user friendly
+                    valueFormat: "yyyy-MM-dd",
+                    displayFormat: "dd/MM/yyyy",
                     change: this.onTrackFilter.bind(this)
                 }).addStyleClass("sapUiTinyMarginEnd")
                     .data("field", sField);
@@ -687,25 +888,25 @@ sap.ui.define([
             var aFiltered = aBaseData.filter(function (oItem) {
                 var bMatch = true;
 
-                // ✅ default filters
+                // default filters
                 var sComp = that.byId("trackComponent").getValue().toLowerCase();
-                var sBatchFirst = that.byId("trackBatchFirst").getValue().toLowerCase();
-                var sBatchRelease = that.byId("trackBatchRelease").getValue().toLowerCase();
+                var sBatchFirstPkg = that.byId("trackBatchFirst").getValue().toLowerCase();
+                var sBatchFirstRelease = that.byId("trackBatchFirstRelease").getValue().toLowerCase();
 
-                if (sComp && !(oItem.Component || "").toLowerCase().includes(sComp)) bMatch = false;
-                if (sBatchFirst && !(oItem.BatchFirst || "").toLowerCase().includes(sBatchFirst)) bMatch = false;
-                if (sBatchRelease && !(oItem.BatchRelease || "").toLowerCase().includes(sBatchRelease)) bMatch = false;
+                if (sComp && !(oItem["Packging Site Component Code"] || "").toLowerCase().includes(sComp)) bMatch = false;
+                if (sBatchFirstPkg && !(oItem["Batch No. of First Packaging"] || "").toLowerCase().includes(sBatchFirstPkg)) bMatch = false;
+                if (sBatchFirstRelease && !(oItem["Batch No. of First Release"] || "").toLowerCase().includes(sBatchFirstRelease)) bMatch = false;
 
-                // ✅ DateFirst (default date filter)
-                var oDateFirst = that.byId("trackDateFirst").getDateValue(); // direct Date object
-                if (oDateFirst) {
-                    var dValue = that._parseDate(oItem.DateFirst);
-                    if (!dValue || dValue.toDateString() !== oDateFirst.toDateString()) {
+                // First Packaging Date filter
+                var oDateFirstPkg = that.byId("trackDateFirst").getDateValue();
+                if (oDateFirstPkg) {
+                    var dValue = that._parseDate(oItem["Date of First Packaging"]);
+                    if (!dValue || dValue.toDateString() !== oDateFirstPkg.toDateString()) {
                         bMatch = false;
                     }
                 }
 
-                // ✅ dynamic filters
+                // dynamic filters
                 if (that._trackDynamicFilters) {
                     Object.keys(that._trackDynamicFilters).forEach(function (sField) {
                         var oControl = that._trackDynamicFilters[sField];
@@ -730,6 +931,7 @@ sap.ui.define([
                         }
                     });
                 }
+
                 return bMatch;
             });
 
@@ -740,10 +942,11 @@ sap.ui.define([
             var that = this;
 
             // reset default inputs
-            ["Component", "BatchFirst", "DateFirst", "BatchRelease"].forEach(function (sKey) {
+            ["Component", "BatchFirst", "DateFirst", "BatchFirstRelease"].forEach(function (sKey) {
                 var oInput = that.byId("track" + sKey);
                 if (oInput) {
-                    oInput.setValue("");
+                    if (oInput.setValue) oInput.setValue("");
+                    if (oInput.setDateValue) oInput.setDateValue(null);
                 }
             });
 
@@ -760,32 +963,135 @@ sap.ui.define([
             this._createTable("track", aSource);
         },
 
-        //====================== Audit Filter ======================
-        onAuditFilter: function () {
-            var oModel = this.getView().getModel();
-            var aBaseData = (this._filteredData && this._filteredData.audit)
-                ? this._filteredData.audit
-                : oModel.getData().audit;
+        _parseDate: function (sValue) {
+            if (!sValue) return null;
+            if (sValue instanceof Date) return sValue;
 
-            var sUser = this.byId("auditUser").getValue().toLowerCase();
-            var sAction = this.byId("auditAction").getValue().toLowerCase();
-            var oDate = this.byId("auditDate").getDateValue();   // 👈 direct Date object
-            var sSite = this.byId("auditSite").getValue().toLowerCase();
+            // assume format yyyy-MM-dd
+            var parts = sValue.split("-");
+            if (parts.length === 3) {
+                return new Date(parts[0], parts[1] - 1, parts[2]);
+            }
+            return new Date(sValue);
+        },
+
+
+
+        //====================== Audit Filter ======================
+        onAuditAddFilter: function (oEvent) {
             var that = this;
+            if (!this._oAuditFilterSheet) {
+                this._oAuditFilterSheet = new sap.m.ActionSheet({
+                    title: "Add Filter",
+                    showCancelButton: true,
+                    buttons: [
+                        new sap.m.Button({ text: "Comments", press: () => that._addAuditFilterField("comments") }),
+                        new sap.m.Button({ text: "Packaging Site", press: () => that._addAuditFilterField("pkgSite") }),
+                        new sap.m.Button({ text: "Packing Date", press: () => that._addAuditFilterField("packingDate", true) }),
+                        new sap.m.Button({ text: "Modified At", press: () => that._addAuditFilterField("modifiedAt", true) }),
+                        new sap.m.Button({ text: "Created At", press: () => that._addAuditFilterField("createdAt", true) }),
+                        new sap.m.Button({ text: "Release Date", press: () => that._addAuditFilterField("releaseDate", true) })
+                    ]
+                });
+                this.getView().addDependent(this._oAuditFilterSheet);
+            }
+            this._oAuditFilterSheet.openBy(oEvent.getSource());
+        },
+
+        _addAuditFilterField: function (sField, bIsDate) {
+            this._auditDynamicFilters = this._auditDynamicFilters || {};
+
+            if (this._auditDynamicFilters[sField]) {
+                sap.m.MessageToast.show(sField + " filter already added");
+                return;
+            }
+
+            var sFullId = this.getView().createId("audit" + sField);
+
+            var oLabel = new sap.m.Label({ text: sField + ":" })
+                .addStyleClass("sapUiTinyMarginEnd");
+
+            var oControl;
+            if (bIsDate) {
+                oControl = new sap.m.DatePicker({
+                    id: sFullId,
+                    width: "150px",
+                    valueFormat: "yyyy-MM-dd",
+                    displayFormat: "dd/MM/yyyy",
+                    change: this.onAuditFilter.bind(this)
+                }).addStyleClass("sapUiTinyMarginEnd")
+                    .data("field", sField);
+            } else {
+                oControl = new sap.m.Input({
+                    id: sFullId,
+                    width: "150px",
+                    liveChange: this.onAuditFilter.bind(this)
+                }).addStyleClass("sapUiTinyMarginEnd")
+                    .data("field", sField);
+            }
+
+            this._auditDynamicFilters[sField] = oControl;
+
+            var oFilterRows = this.byId("auditFilterRows");
+            var aRows = oFilterRows.getItems();
+            var oLastRow = aRows[aRows.length - 1];
+
+            if (!oLastRow || oLastRow.getItems().length >= 8) {
+                oLastRow = new sap.m.HBox({
+                    alignItems: "Center",
+                    class: "sapUiSmallMarginBottom"
+                });
+                oFilterRows.addItem(oLastRow);
+            }
+
+            oLastRow.addItem(oLabel);
+            oLastRow.addItem(oControl);
+        },
+
+        onAuditFilter: function () {
+            var that = this;
+            var oModel = this.getView().getModel();
+            var aBaseData = oModel.getData().audit || [];
+
+            var sBatchNo = (this.byId("auditBatchNo")?.getValue() || "").toLowerCase();
+            var sCreatedBy = (this.byId("auditCreatedBy")?.getValue() || "").toLowerCase();
+            var sModifiedBy = (this.byId("auditModifiedBy")?.getValue() || "").toLowerCase();
+            var sCompCode = (this.byId("auditCompCode")?.getValue() || "").toLowerCase();
+
+            var dCreatedDate = this.byId("auditCreatedDate")?.getDateValue();
+            var dReleaseDate = this.byId("auditReleaseDate")?.getDateValue();
 
             var aFiltered = aBaseData.filter(function (oItem) {
                 var bMatch = true;
 
-                if (sUser && !(oItem.User || "").toLowerCase().includes(sUser)) bMatch = false;
-                if (sAction && !(oItem.Action || "").toLowerCase().includes(sAction)) bMatch = false;
-                if (sSite && !(oItem.Site || "").toLowerCase().includes(sSite)) bMatch = false;
+                if (sBatchNo && !(oItem.batchNo || "").toLowerCase().includes(sBatchNo)) bMatch = false;
+                if (sCreatedBy && !(oItem.createdBy || "").toLowerCase().includes(sCreatedBy)) bMatch = false;
+                if (sModifiedBy && !(oItem.modifiedBy || "").toLowerCase().includes(sModifiedBy)) bMatch = false;
+                if (sCompCode && !(oItem.compCode || "").toLowerCase().includes(sCompCode)) bMatch = false;
 
-                if (oDate) {
-                    var dValue = that._parseDate(oItem.Date);
-                    if (!dValue || dValue.toDateString() !== oDate.toDateString()) {
-                        bMatch = false;
-                    }
+                if (dCreatedDate) {
+                    var dVal = that._parseDate(oItem.createdDate || oItem.createdAt);
+                    if (!dVal || dVal.toDateString() !== dCreatedDate.toDateString()) bMatch = false;
                 }
+                if (dReleaseDate) {
+                    var dVal2 = that._parseDate(oItem.releaseDate);
+                    if (!dVal2 || dVal2.toDateString() !== dReleaseDate.toDateString()) bMatch = false;
+                }
+
+                // dynamic filters
+                Object.keys(that._auditDynamicFilters || {}).forEach(function (sField) {
+                    var oCtrl = that._auditDynamicFilters[sField];
+                    if (oCtrl instanceof sap.m.DatePicker) {
+                        var dVal = oCtrl.getDateValue();
+                        if (dVal) {
+                            var dField = that._parseDate(oItem[sField]);
+                            if (!dField || dField.toDateString() !== dVal.toDateString()) bMatch = false;
+                        }
+                    } else if (oCtrl instanceof sap.m.Input) {
+                        var sVal = (oCtrl.getValue() || "").toLowerCase();
+                        if (sVal && !(oItem[sField] || "").toLowerCase().includes(sVal)) bMatch = false;
+                    }
+                });
 
                 return bMatch;
             });
@@ -793,52 +1099,101 @@ sap.ui.define([
             this._createTable("audit", aFiltered);
         },
 
+        onAuditFilterReset: function () {
+            ["BatchNo", "CreatedBy", "ModifiedBy", "CompCode"].forEach(k => {
+                var oInput = this.byId("audit" + k);
+                if (oInput) oInput.setValue("");
+            });
+
+            ["CreatedDate", "ReleaseDate"].forEach(k => {
+                var oDP = this.byId("audit" + k);
+                if (oDP) oDP.setDateValue(null);
+            });
+
+            var oFilterRows = this.byId("auditFilterRows");
+            oFilterRows.destroyItems();
+            this._auditDynamicFilters = {};
+
+            this._createTable("audit", this.getView().getModel().getData().audit);
+        },
+
+        // helper
+        _parseDate: function (sValue) {
+            if (!sValue) return null;
+            if (sValue instanceof Date) return new Date(sValue.getFullYear(), sValue.getMonth(), sValue.getDate());
+            var d = new Date(sValue);
+            return isNaN(d) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
+        },
+
         // ---------------- ACTIVITY FILTERS ----------------
         onActivityFilter: function () {
             var oModel = this.getView().getModel();
             var aBaseData = (this._filteredData && this._filteredData.activity)
                 ? this._filteredData.activity
-                : oModel.getData().activity;
+                : (oModel.getData().activity || []);
 
-            var sSite = this.byId("activitySite").getValue().toLowerCase();
-            var sDetail = this.byId("activityDetail").getValue().toLowerCase();
+            var sPkgSite = this.byId("activityPkgSite").getValue().toLowerCase();
             var sCreatedBy = this.byId("activityCreatedBy").getValue().toLowerCase();
-            var oCreatedDate = this.byId("activityCreatedDate").getDateValue();
+            var dLastActivityDate = this.byId("activityLastActivityDate").getDateValue();
+            var dTodayDate = this.byId("activityTodayDate").getDateValue();
+            var iDaysFromToday = this.byId("activityDaysFromToday").getValue();
 
             var that = this;
 
             var aFiltered = aBaseData.filter(function (oItem) {
                 var bMatch = true;
 
-                if (sSite && !(oItem.Site || "").toLowerCase().includes(sSite)) bMatch = false;
-                if (sDetail && !(oItem.Detail || "").toLowerCase().includes(sDetail)) bMatch = false;
-                if (sCreatedBy && !(oItem.CreatedBy || "").toLowerCase().includes(sCreatedBy)) bMatch = false;
+                if (sPkgSite && !(oItem.pkgSite || "").toLowerCase().includes(sPkgSite)) bMatch = false;
+                if (sCreatedBy && !(oItem.createdBy || "").toLowerCase().includes(sCreatedBy)) bMatch = false;
 
-                if (oCreatedDate) {
-                    var dValue = that._parseDate(oItem.CreatedDate);
-                    if (!dValue || dValue.toDateString() !== oCreatedDate.toDateString()) {
+                if (dLastActivityDate) {
+                    var dValue = that._parseDate(oItem.lastActivityDate);
+                    if (!dValue || dValue.toDateString() !== dLastActivityDate.toDateString()) {
                         bMatch = false;
                     }
                 }
+
+                if (dTodayDate) {
+                    var dVal = that._parseDate(oItem.todayDate);
+                    if (!dVal || dVal.toDateString() !== dTodayDate.toDateString()) {
+                        bMatch = false;
+                    }
+                }
+
+                if (iDaysFromToday) {
+                    var iVal = parseInt(iDaysFromToday, 10);
+                    if (!isNaN(iVal) && oItem.daysFromToday !== iVal) {
+                        bMatch = false;
+                    }
+                }
+
                 return bMatch;
             });
+
             this._createTable("activity", aFiltered);
         },
 
-        onAuditFilterReset: function () {
-            this.byId("auditUser").setValue("");
-            this.byId("auditAction").setValue("");
-            this.byId("auditDate").setValue("");
-            this.byId("auditSite").setValue("");
-            this._createTable("audit", this._filteredData.audit);
-        },
-
         onActivityFilterReset: function () {
-            this.byId("activitySite").setValue("");
-            this.byId("activityDetail").setValue("");
+            this.byId("activityPkgSite").setValue("");
             this.byId("activityCreatedBy").setValue("");
-            this.byId("activityCreatedDate").setValue("");
-            this._createTable("activity", this._filteredData.activity);
+            this.byId("activityLastActivityDate").setDateValue(null);
+            this.byId("activityTodayDate").setDateValue(null);
+            this.byId("activityDaysFromToday").setValue("");
+
+            this._createTable("activity", this._filteredData.activity || []);
+        },
+        
+        _parseDate: function (sValue) {
+            if (!sValue) return null;
+            if (sValue instanceof Date) return sValue;
+
+            if (typeof sValue === "string") {
+                var parts = sValue.split("-");
+                if (parts.length === 3) {
+                    return new Date(parts[0], parts[1] - 1, parts[2]);
+                }
+            }
+            return new Date(sValue);
         }
 
     });

@@ -1,1 +1,1 @@
-using MyService as service from '../../srv/service';
+using batchpackrelease as service from '../../srv/service';
