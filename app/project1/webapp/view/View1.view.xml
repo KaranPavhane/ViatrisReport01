@@ -23,8 +23,6 @@
                     class="sapUiContentPadding"
                     width="100%"
                 >
-        
-
                     <m:MultiInput
                         id="productInput"
                         placeholder="Enter Packaging Site Code"
@@ -41,29 +39,31 @@
                 </l:VerticalLayout>
 
                 <m:HBox alignItems="Center">
-                    <m:Label
-                        text="From Date:"
-                        class="sapUiSmallMarginEnd"
-                    />
-                    <m:DatePicker
-                        id="fromDate"
-                        width="130px"
-                        placeholder="dd/mm/yyyy"
-                        displayFormat="dd/MM/yyyy"
-                        valueFormat="yyyy-MM-dd"
-                    />
+                   <m:Label
+    text="From Date:"
+    class="sapUiSmallMarginEnd"
+/>
+<m:DatePicker
+    id="fromDate"
+    width="130px"
+    placeholder="dd/mm/yyyy"
+    displayFormat="dd/MM/yyyy"
+    valueFormat="yyyy-MM-dd"
+    change=".onFromDateChange"
+/>
 
-                    <m:Label
-                        text="To Date:"
-                        class="sapUiSmallMarginBegin sapUiSmallMarginEnd"
-                    />
-                    <m:DatePicker
-                        id="toDate"
-                        width="130px"
-                        placeholder="dd/mm/yyyy"
-                        displayFormat="dd/MM/yyyy"
-                        valueFormat="yyyy-MM-dd"
-                    />
+<m:Label
+    text="To Date:"
+    class="sapUiSmallMarginBegin sapUiSmallMarginEnd"
+/>
+<m:DatePicker
+    id="toDate"
+    width="130px"
+    placeholder="dd/mm/yyyy"
+    displayFormat="dd/MM/yyyy"
+    valueFormat="yyyy-MM-dd"
+    change=".onToDateChange"
+/>
 
                     <m:Button
                         text="Go"
@@ -212,51 +212,39 @@
                     justifyContent="SpaceBetween"
                     class="sapUiTinyMarginBottom"
                 >
-                    <!-- 🔹 Default Filters -->
+                    <!-- 🔹 Default Filters (3 only) -->
                     <m:HBox
                         alignItems="Center"
                         justifyContent="Start"
                     >
                         <m:Label
-                            text="Component:"
+                            text="Packging Site Component Code:"
                             class="sapUiTinyMarginEnd"
                         />
                         <m:Input
-                            id="trackComponent"
+                            id="trackPackgingSiteComponentCode"
                             width="150px"
                             liveChange=".onTrackFilter"
                         />
 
                         <m:Label
-                            text="BatchFirstPkg:"
+                            text="Batch No. of First Packaging:"
                             class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
                         />
                         <m:Input
-                            id="trackBatchFirst"
+                            id="trackBatchNoOfFirstPackaging"
                             width="150px"
                             liveChange=".onTrackFilter"
                         />
 
                         <m:Label
-                            text="BatchFirstRelease:"
+                            text="Batch No. of First Release:"
                             class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
                         />
                         <m:Input
-                            id="trackBatchFirstRelease"
+                            id="trackBatchNoOfFirstRelease"
                             width="150px"
                             liveChange=".onTrackFilter"
-                        />
-
-                        <m:Label
-                            text="DateFirstPkg:"
-                            class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
-                        />
-                        <m:DatePicker
-                            id="trackDateFirst"
-                            width="150px"
-                            valueFormat="yyyy-MM-dd"
-                            displayFormat="dd/MM/yyyy"
-                            change=".onTrackFilter"
                         />
                     </m:HBox>
 

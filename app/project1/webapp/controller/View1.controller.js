@@ -41,19 +41,19 @@ sap.ui.define([
                 batchNo: "Batch No.",
                 comments: "Comments",
                 compCode: "Componant Code",
-                createdAt: "CreatedAt",
-                createdBy: "CreatedBy",
-                createdDate: "CreatedDate",
-                modifiedAt: "ModifiedAt",
-                modifiedBy: "ModifiedBy",
-                packingDate: "PackingDate",
-                pkgSite: "PackagingSite",
-                releaseDate: "ReleaseDate",
-                packagingSiteID: "PackagingSiteID",
+                createdAt: "Created At",
+                createdBy: "Created By",
+                createdDate: "Created Date",
+                modifiedAt: "Modified At",
+                modifiedBy: "Modified By",
+                packingDate: "Packing Date",
+                pkgSite: "Packaging Site",
+                releaseDate: "Release Date",
+                packagingSiteID: "Packaging Site ID",
                 user: "User",
-                lastActivityDate: "LastActivityDate",
-                todayDate: "TodayDate",
-                daysFromToday: "DaysFromToday"
+                lastActivityDate: "Last Activity Date",
+                todayDate: "Today Date",
+                daysFromToday: "Days From Today"
             };
 
             // Hide column to showing in table
@@ -79,10 +79,37 @@ sap.ui.define([
             var aItems = oMultiInput.getSuggestionItems();
 
             if (aItems.length > 0) {
-                oMultiInput.setShowSuggestion(true);  
-                oMultiInput.openSuggestions();        
+                oMultiInput.setShowSuggestion(true);
+                oMultiInput.openSuggestions();
             }
         },
+
+        onFromDateChange: function (oEvent) {
+    var oFromDate = oEvent.getSource().getDateValue();
+    var oToDatePicker = this.byId("toDate");
+
+    if (oFromDate) {
+        // enable To Date
+        oToDatePicker.setEnabled(true);
+        // also restrict min date
+        oToDatePicker.setMinDate(oFromDate);
+    } else {
+        // reset To Date if From Date cleared
+        oToDatePicker.setValue("");
+        oToDatePicker.setEnabled(false);
+    }
+},
+
+onToDateChange: function (oEvent) {
+    var oToDate = oEvent.getSource().getDateValue();
+    var oFromDate = this.byId("fromDate").getDateValue();
+
+    if (!oFromDate && oToDate) {
+        sap.m.MessageToast.show("Please select From Date first");
+        oEvent.getSource().setValue(""); // reset To Date
+    }
+},
+
 
         onFilterGo: function () {
 
@@ -550,8 +577,8 @@ sap.ui.define([
                 return !(that._ignoredColumns && that._ignoredColumns.includes(key));
             });
 
-            var sLogoPath = sap.ui.require.toUrl("project1/img/logo-design.webp");
-            var sBgPath = sap.ui.require.toUrl("project1/img/jj-ying-7JX0-bfiuxQ-unsplash.jpg");
+            var sLogoPath = sap.ui.require.toUrl("project1/img/VIATRIS_Logo.png");
+            var sBgPath = sap.ui.require.toUrl("project1/img/background_img_pdf.jpg");
 
             // Table build
             var sTable = "<table><thead><tr>";
@@ -616,7 +643,7 @@ sap.ui.define([
 
             var sHeaderHtml = '<div class="header">' +
                 '<h3>' + escHtml(sTitle) + '</h3>' +
-                '<img class="logo" src="' + sLogoPath + '" alt="Logo" />' +
+                '<img class="logo" src="' + sLogoPath + '" alt="Logo" style="height:100px;" />' +
                 '</div>';
 
             var fullHtml = "<!doctype html><html><head><meta charset='utf-8'><title>" + escHtml(sTitle) + "</title>" + sStyle + "</head><body>" +
@@ -650,7 +677,6 @@ sap.ui.define([
             }, 700);
         },
 
-
         // ---------------- SUMMARY FILTERS ----------------
         onAddFilterPress: function (oEvent) {
             var that = this;
@@ -663,7 +689,7 @@ sap.ui.define([
 
                 var aButtons = aFields.map(function (sField) {
                     return new sap.m.Button({
-                        text: sField,
+                        text: that._columnMapping[sField] || sField,
                         press: function () { that._addFilterField(sField); }
                     });
                 });
@@ -729,6 +755,7 @@ sap.ui.define([
             oLastRow.addItem(oLabel);
             oLastRow.addItem(oControl);
         },
+
 
         onSummaryFilter: function () {
             var that = this;
@@ -809,10 +836,14 @@ sap.ui.define([
                     title: "Add Filter",
                     showCancelButton: true,
                     buttons: [
+                        new sap.m.Button({ text: "Date of First Packaging", press: function () { that._addTrackFilterField("Date of First Packaging"); } }),
+                        new sap.m.Button({ text: "Date of First Release", press: function () { that._addTrackFilterField("Date of First Release"); } }),
                         new sap.m.Button({ text: "Date of Last Packaging", press: function () { that._addTrackFilterField("Date of Last Packaging"); } }),
                         new sap.m.Button({ text: "Date of Last Release", press: function () { that._addTrackFilterField("Date of Last Release"); } }),
                         new sap.m.Button({ text: "Batch No. of Last Packaging", press: function () { that._addTrackFilterField("Batch No. of Last Packaging"); } }),
-                        new sap.m.Button({ text: "Batch No. of Last Release", press: function () { that._addTrackFilterField("Batch No. of Last Release"); } })
+                        new sap.m.Button({ text: "Batch No. of Last Release", press: function () { that._addTrackFilterField("Batch No. of Last Release"); } }),
+                        new sap.m.Button({ text: "Packaging Site Code", press: function () { that._addTrackFilterField("Packaging Site Code"); } }),
+                        new sap.m.Button({ text: "Packaging Site Name", press: function () { that._addTrackFilterField("Packaging Site Name"); } })
                     ]
                 });
                 this.getView().addDependent(this._oTrackFilterSheet);
@@ -820,6 +851,7 @@ sap.ui.define([
 
             this._oTrackFilterSheet.openBy(oEvent.getSource());
         },
+
 
         _addTrackFilterField: function (sField) {
             this._trackDynamicFilters = this._trackDynamicFilters || {};
@@ -878,90 +910,85 @@ sap.ui.define([
             oLastRow.addItem(oControl);
         },
 
-        onTrackFilter: function () {
-            var that = this;
-            var oModel = this.getView().getModel();
-            var aBaseData = (this._filteredData && this._filteredData.track)
-                ? this._filteredData.track
-                : oModel.getData().track;
+       onTrackFilter: function () {
+    var that = this;
+    var oModel = this.getView().getModel();
+    var aBaseData = (this._filteredData && this._filteredData.track)
+        ? this._filteredData.track
+        : oModel.getData().track;
 
-            var aFiltered = aBaseData.filter(function (oItem) {
-                var bMatch = true;
+    var aFiltered = aBaseData.filter(function (oItem) {
+        var bMatch = true;
 
-                // default filters
-                var sComp = that.byId("trackComponent").getValue().toLowerCase();
-                var sBatchFirstPkg = that.byId("trackBatchFirst").getValue().toLowerCase();
-                var sBatchFirstRelease = that.byId("trackBatchFirstRelease").getValue().toLowerCase();
+        // 🔹 default filters
+        var sComp = (that.byId("trackPackgingSiteComponentCode").getValue() || "").toLowerCase();
+        var sBatchFirstPkg = (that.byId("trackBatchNoOfFirstPackaging").getValue() || "").toLowerCase();
+        var sBatchFirstRelease = (that.byId("trackBatchNoOfFirstRelease").getValue() || "").toLowerCase();
 
-                if (sComp && !(oItem["Packging Site Component Code"] || "").toLowerCase().includes(sComp)) bMatch = false;
-                if (sBatchFirstPkg && !(oItem["Batch No. of First Packaging"] || "").toLowerCase().includes(sBatchFirstPkg)) bMatch = false;
-                if (sBatchFirstRelease && !(oItem["Batch No. of First Release"] || "").toLowerCase().includes(sBatchFirstRelease)) bMatch = false;
+        if (sComp && !(oItem["Packging Site Component Code"] || "").toLowerCase().includes(sComp)) bMatch = false;
+        if (sBatchFirstPkg && !(oItem["Batch No. of First Packaging"] || "").toLowerCase().includes(sBatchFirstPkg)) bMatch = false;
+        if (sBatchFirstRelease && !(oItem["Batch No. of First Release"] || "").toLowerCase().includes(sBatchFirstRelease)) bMatch = false;
 
-                // First Packaging Date filter
-                var oDateFirstPkg = that.byId("trackDateFirst").getDateValue();
-                if (oDateFirstPkg) {
-                    var dValue = that._parseDate(oItem["Date of First Packaging"]);
-                    if (!dValue || dValue.toDateString() !== oDateFirstPkg.toDateString()) {
-                        bMatch = false;
-                    }
-                }
-
-                // dynamic filters
-                if (that._trackDynamicFilters) {
-                    Object.keys(that._trackDynamicFilters).forEach(function (sField) {
-                        var oControl = that._trackDynamicFilters[sField];
-                        if (oControl) {
-                            if (oControl instanceof sap.m.DatePicker) {
-                                var oVal = oControl.getDateValue();
-                                if (oVal) {
-                                    var dField = that._parseDate(oItem[sField]);
-                                    if (!dField || dField.toDateString() !== oVal.toDateString()) {
-                                        bMatch = false;
-                                    }
-                                }
-                            } else {
-                                var sVal = (oControl.getValue() || "").toLowerCase();
-                                if (sVal) {
-                                    var sFieldVal = (oItem[sField] || "").toLowerCase();
-                                    if (!sFieldVal.includes(sVal)) {
-                                        bMatch = false;
-                                    }
-                                }
+        // 🔹 dynamic filters
+        if (that._trackDynamicFilters) {
+            Object.keys(that._trackDynamicFilters).forEach(function (sField) {
+                var oControl = that._trackDynamicFilters[sField];
+                if (oControl) {
+                    if (oControl instanceof sap.m.DatePicker) {
+                        var oVal = oControl.getDateValue();
+                        if (oVal) {
+                            var dField = that._parseDate(oItem[sField]);
+                            if (!dField || dField.toDateString() !== oVal.toDateString()) {
+                                bMatch = false;
                             }
                         }
-                    });
-                }
-
-                return bMatch;
-            });
-
-            this._createTable("track", aFiltered);
-        },
-
-        onTrackFilterReset: function () {
-            var that = this;
-
-            // reset default inputs
-            ["Component", "BatchFirst", "DateFirst", "BatchFirstRelease"].forEach(function (sKey) {
-                var oInput = that.byId("track" + sKey);
-                if (oInput) {
-                    if (oInput.setValue) oInput.setValue("");
-                    if (oInput.setDateValue) oInput.setDateValue(null);
+                    } else {
+                        var sVal = (oControl.getValue() || "").toLowerCase();
+                        if (sVal) {
+                            var sFieldVal = (oItem[sField] || "").toLowerCase();
+                            if (!sFieldVal.includes(sVal)) {
+                                bMatch = false;
+                            }
+                        }
+                    }
                 }
             });
+        }
 
-            // destroy dynamic filters
-            var oFilterRows = this.byId("trackFilterRows");
-            oFilterRows.destroyItems();
-            this._trackDynamicFilters = {};
+        return bMatch;
+    });
 
-            // refresh table
-            var aSource = (this._filteredData && this._filteredData.track)
-                ? this._filteredData.track
-                : this.getView().getModel().getData().track;
+    this._createTable("track", aFiltered);
+},
 
-            this._createTable("track", aSource);
-        },
+       onTrackFilterReset: function () {
+    var that = this;
+
+    // reset default inputs (3 only)
+    [
+        "PackgingSiteComponentCode",
+        "BatchNoOfFirstPackaging",
+        "BatchNoOfFirstRelease"
+    ].forEach(function (sKey) {
+        var oInput = that.byId("track" + sKey);
+        if (oInput) {
+            if (oInput.setValue) oInput.setValue("");
+            if (oInput.setDateValue) oInput.setDateValue(null);
+        }
+    });
+
+    // destroy dynamic filters
+    var oFilterRows = this.byId("trackFilterRows");
+    oFilterRows.destroyItems();
+    this._trackDynamicFilters = {};
+
+    // refresh table
+    var aSource = (this._filteredData && this._filteredData.track)
+        ? this._filteredData.track
+        : this.getView().getModel().getData().track;
+
+    this._createTable("track", aSource);
+},
 
         _parseDate: function (sValue) {
             if (!sValue) return null;
@@ -1182,7 +1209,7 @@ sap.ui.define([
 
             this._createTable("activity", this._filteredData.activity || []);
         },
-        
+
         _parseDate: function (sValue) {
             if (!sValue) return null;
             if (sValue instanceof Date) return sValue;
