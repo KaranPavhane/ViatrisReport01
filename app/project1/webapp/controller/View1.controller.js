@@ -236,8 +236,6 @@ sap.ui.define([
                 }
             });
 
-
-            // Audit and Activity Data fetch
             // Audit and Activity Data fetch
             $.ajax({
                 url: "/odata/v4/document/AuditTrial",
@@ -247,21 +245,19 @@ sap.ui.define([
                 success: function (res) {
                     var aAudit = res.value || [];
 
-                    // ✅ Define required column order for Audit
                     var aColumnOrder = [
-                        "batchNo",      // Batch No
-                        "compCode",     // Component Code
-                        "releaseDate",  // Release Date
-                        "packingDate",  // Packing Date
-                        "createdAt",    // Date of Upload [time stamp]
-                        "pkgSite",      // Packaging SITE ID-NAME
-                        "comments",     // Comment
-                        "createdBy",    // Created By
-                        "modifiedAt",   // Modified Date
-                        "modifiedBy"    // Modified By
+                        "batchNo",      
+                        "compCode",     
+                        "releaseDate",  
+                        "packingDate",  
+                        "createdAt",    
+                        "pkgSite",      
+                        "comments",     
+                        "createdBy",   
+                        "modifiedAt",  
+                        "modifiedBy"    
                     ];
 
-                    // ✅ Reorder audit data
                     var aReorderedAudit = aAudit.map(function (item) {
                         var newObj = {};
                         aColumnOrder.forEach(function (key) {
@@ -275,7 +271,7 @@ sap.ui.define([
 
                     console.log("✅ Audit Data (Reordered):", aReorderedAudit);
 
-                    // collect pkgSites & createdBys
+                    
                     var aPkgSites = [...new Set(aReorderedAudit.map(item => item.pkgSite).filter(Boolean))];
                     var aCreatedBys = [...new Set(aReorderedAudit.map(item => item.createdBy).filter(Boolean))];
 
