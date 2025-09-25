@@ -85,30 +85,30 @@ sap.ui.define([
         },
 
         onFromDateChange: function (oEvent) {
-    var oFromDate = oEvent.getSource().getDateValue();
-    var oToDatePicker = this.byId("toDate");
+            var oFromDate = oEvent.getSource().getDateValue();
+            var oToDatePicker = this.byId("toDate");
 
-    if (oFromDate) {
-        // enable To Date
-        oToDatePicker.setEnabled(true);
-        // also restrict min date
-        oToDatePicker.setMinDate(oFromDate);
-    } else {
-        // reset To Date if From Date cleared
-        oToDatePicker.setValue("");
-        oToDatePicker.setEnabled(false);
-    }
-},
+            if (oFromDate) {
+                // enable To Date
+                oToDatePicker.setEnabled(true);
+                // also restrict min date
+                oToDatePicker.setMinDate(oFromDate);
+            } else {
+                // reset To Date if From Date cleared
+                oToDatePicker.setValue("");
+                oToDatePicker.setEnabled(false);
+            }
+        },
 
-onToDateChange: function (oEvent) {
-    var oToDate = oEvent.getSource().getDateValue();
-    var oFromDate = this.byId("fromDate").getDateValue();
+        onToDateChange: function (oEvent) {
+            var oToDate = oEvent.getSource().getDateValue();
+            var oFromDate = this.byId("fromDate").getDateValue();
 
-    if (!oFromDate && oToDate) {
-        sap.m.MessageToast.show("Please select From Date first");
-        oEvent.getSource().setValue(""); // reset To Date
-    }
-},
+            if (!oFromDate && oToDate) {
+                sap.m.MessageToast.show("Please select From Date first");
+                oEvent.getSource().setValue(""); // reset To Date
+            }
+        },
 
 
         onFilterGo: function () {
@@ -134,6 +134,7 @@ onToDateChange: function (oEvent) {
 
             this._filteredData = {};
 
+            // Fetch Summary Reports Data 
             $.ajax({
                 url: "/odata/v4/document/BatchData",
                 method: "GET",
@@ -141,22 +142,41 @@ onToDateChange: function (oEvent) {
                 success: function (oResponse) {
                     var aSummary = oResponse.value || [];
 
-                    console.log("✅ BatchData (Summary):", aSummary);
+                    var aColumnOrder = [
+                        "batchNo",
+                        "compCode",
+                        "releaseDate",
+                        "packingDate",
+                        "createdAt",
+                        "pkgSite",
+                        "comments",
+                        "createdBy",
+                        "modifiedAt",
+                        "modifiedBy"
+                    ];
+
+                    var aReordered = aSummary.map(function (item) {
+                        var newObj = {};
+                        aColumnOrder.forEach(function (key) {
+                            newObj[key] = item[key] || "";
+                        });
+                        return newObj;
+                    });
+
+                    console.log("✅ Reordered Summary:", aReordered);
 
                     var oModel = that.getView().getModel();
-                    oModel.setProperty("/summary", aSummary);
+                    oModel.setProperty("/summary", aReordered);
 
-                    that._filteredData.summary = aSummary;
+                    that._filteredData.summary = aReordered;
 
                     if (that._currentKey === "summary") {
-                        that._createTable("summary", aSummary);
+                        that._createTable("summary", aReordered);
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error("❌ Error loading BatchData:", status, error);
                     console.error("Response:", xhr.responseText);
-
-                    // fallback empty set
                     var oModel = that.getView().getModel();
                     oModel.setProperty("/summary", []);
                     that._filteredData.summary = [];
@@ -174,17 +194,50 @@ onToDateChange: function (oEvent) {
                 }),
                 success: function (res) {
                     var aTrack = res.results || [];
-                    that.getView().getModel().setProperty("/track", aTrack);
-                    that._filteredData.track = aTrack;
-                    console.log("Trackwise Report:", aTrack);
+
+                    // ✅ Define required column order
+                    var aColumnOrder = [
+                        "Packging Site Component Code", // Component Code
+                        "Batch No. of First Packaging",
+                        "Date of First Packaging",
+                        "Batch No. of First Release",
+                        "Date of First Release",
+                        "Batch No. of Last Packaging",
+                        "Date of Last Packaging",
+                        "Batch No. of Last Release",
+                        "Date of Last Release",
+                        "Packaging Site Code",
+                        "Packaging Site Name"
+                    ];
+
+                    // ✅ Reorder each row according to column order
+                    var aReordered = aTrack.map(function (item) {
+                        var newObj = {};
+                        aColumnOrder.forEach(function (key) {
+                            newObj[key] = item[key] || "";
+                        });
+                        return newObj;
+                    });
+
+                    console.log("✅ Trackwise Report (Reordered):", aReordered);
+
+                    // set to model
+                    that.getView().getModel().setProperty("/track", aReordered);
+                    that._filteredData.track = aReordered;
+
+                    if (that._currentKey === "track") {
+                        that._createTable("track", aReordered);
+                    }
                 },
                 error: function (xhr, status, error) {
-                    console.error("Error:", status, error);
+                    console.error("❌ Error:", status, error);
                     console.error("Response:", xhr.responseText);
                     that._filteredData.track = [];
                 }
             });
 
+
+            // Audit and Activity Data fetch
             // Audit and Activity Data fetch
             $.ajax({
                 url: "/odata/v4/document/AuditTrial",
@@ -193,14 +246,40 @@ onToDateChange: function (oEvent) {
                 context: this,
                 success: function (res) {
                     var aAudit = res.value || [];
-                    this.getView().getModel().setProperty("/audit", aAudit);
-                    this._filteredData.audit = aAudit;
 
-                    console.log("✅ Audit Data:", aAudit);
+                    // ✅ Define required column order for Audit
+                    var aColumnOrder = [
+                        "batchNo",      // Batch No
+                        "compCode",     // Component Code
+                        "releaseDate",  // Release Date
+                        "packingDate",  // Packing Date
+                        "createdAt",    // Date of Upload [time stamp]
+                        "pkgSite",      // Packaging SITE ID-NAME
+                        "comments",     // Comment
+                        "createdBy",    // Created By
+                        "modifiedAt",   // Modified Date
+                        "modifiedBy"    // Modified By
+                    ];
 
-                    var aPkgSites = [...new Set(aAudit.map(item => item.pkgSite).filter(Boolean))];
-                    var aCreatedBys = [...new Set(aAudit.map(item => item.createdBy).filter(Boolean))];
+                    // ✅ Reorder audit data
+                    var aReorderedAudit = aAudit.map(function (item) {
+                        var newObj = {};
+                        aColumnOrder.forEach(function (key) {
+                            newObj[key] = item[key] || "";
+                        });
+                        return newObj;
+                    });
 
+                    this.getView().getModel().setProperty("/audit", aReorderedAudit);
+                    this._filteredData.audit = aReorderedAudit;
+
+                    console.log("✅ Audit Data (Reordered):", aReorderedAudit);
+
+                    // collect pkgSites & createdBys
+                    var aPkgSites = [...new Set(aReorderedAudit.map(item => item.pkgSite).filter(Boolean))];
+                    var aCreatedBys = [...new Set(aReorderedAudit.map(item => item.createdBy).filter(Boolean))];
+
+                    // Activity fetch
                     $.ajax({
                         url: "/odata/v4/document/activityReport",
                         method: "POST",
@@ -230,6 +309,7 @@ onToDateChange: function (oEvent) {
                     this._filteredData.audit = [];
                 }
             });
+
 
             // Default tab --> summary
             this._currentKey = "summary";
@@ -910,85 +990,85 @@ onToDateChange: function (oEvent) {
             oLastRow.addItem(oControl);
         },
 
-       onTrackFilter: function () {
-    var that = this;
-    var oModel = this.getView().getModel();
-    var aBaseData = (this._filteredData && this._filteredData.track)
-        ? this._filteredData.track
-        : oModel.getData().track;
+        onTrackFilter: function () {
+            var that = this;
+            var oModel = this.getView().getModel();
+            var aBaseData = (this._filteredData && this._filteredData.track)
+                ? this._filteredData.track
+                : oModel.getData().track;
 
-    var aFiltered = aBaseData.filter(function (oItem) {
-        var bMatch = true;
+            var aFiltered = aBaseData.filter(function (oItem) {
+                var bMatch = true;
 
-        // 🔹 default filters
-        var sComp = (that.byId("trackPackgingSiteComponentCode").getValue() || "").toLowerCase();
-        var sBatchFirstPkg = (that.byId("trackBatchNoOfFirstPackaging").getValue() || "").toLowerCase();
-        var sBatchFirstRelease = (that.byId("trackBatchNoOfFirstRelease").getValue() || "").toLowerCase();
+                // 🔹 default filters
+                var sComp = (that.byId("trackPackgingSiteComponentCode").getValue() || "").toLowerCase();
+                var sBatchFirstPkg = (that.byId("trackBatchNoOfFirstPackaging").getValue() || "").toLowerCase();
+                var sBatchFirstRelease = (that.byId("trackBatchNoOfFirstRelease").getValue() || "").toLowerCase();
 
-        if (sComp && !(oItem["Packging Site Component Code"] || "").toLowerCase().includes(sComp)) bMatch = false;
-        if (sBatchFirstPkg && !(oItem["Batch No. of First Packaging"] || "").toLowerCase().includes(sBatchFirstPkg)) bMatch = false;
-        if (sBatchFirstRelease && !(oItem["Batch No. of First Release"] || "").toLowerCase().includes(sBatchFirstRelease)) bMatch = false;
+                if (sComp && !(oItem["Packging Site Component Code"] || "").toLowerCase().includes(sComp)) bMatch = false;
+                if (sBatchFirstPkg && !(oItem["Batch No. of First Packaging"] || "").toLowerCase().includes(sBatchFirstPkg)) bMatch = false;
+                if (sBatchFirstRelease && !(oItem["Batch No. of First Release"] || "").toLowerCase().includes(sBatchFirstRelease)) bMatch = false;
 
-        // 🔹 dynamic filters
-        if (that._trackDynamicFilters) {
-            Object.keys(that._trackDynamicFilters).forEach(function (sField) {
-                var oControl = that._trackDynamicFilters[sField];
-                if (oControl) {
-                    if (oControl instanceof sap.m.DatePicker) {
-                        var oVal = oControl.getDateValue();
-                        if (oVal) {
-                            var dField = that._parseDate(oItem[sField]);
-                            if (!dField || dField.toDateString() !== oVal.toDateString()) {
-                                bMatch = false;
+                // 🔹 dynamic filters
+                if (that._trackDynamicFilters) {
+                    Object.keys(that._trackDynamicFilters).forEach(function (sField) {
+                        var oControl = that._trackDynamicFilters[sField];
+                        if (oControl) {
+                            if (oControl instanceof sap.m.DatePicker) {
+                                var oVal = oControl.getDateValue();
+                                if (oVal) {
+                                    var dField = that._parseDate(oItem[sField]);
+                                    if (!dField || dField.toDateString() !== oVal.toDateString()) {
+                                        bMatch = false;
+                                    }
+                                }
+                            } else {
+                                var sVal = (oControl.getValue() || "").toLowerCase();
+                                if (sVal) {
+                                    var sFieldVal = (oItem[sField] || "").toLowerCase();
+                                    if (!sFieldVal.includes(sVal)) {
+                                        bMatch = false;
+                                    }
+                                }
                             }
                         }
-                    } else {
-                        var sVal = (oControl.getValue() || "").toLowerCase();
-                        if (sVal) {
-                            var sFieldVal = (oItem[sField] || "").toLowerCase();
-                            if (!sFieldVal.includes(sVal)) {
-                                bMatch = false;
-                            }
-                        }
-                    }
+                    });
+                }
+
+                return bMatch;
+            });
+
+            this._createTable("track", aFiltered);
+        },
+
+        onTrackFilterReset: function () {
+            var that = this;
+
+            // reset default inputs (3 only)
+            [
+                "PackgingSiteComponentCode",
+                "BatchNoOfFirstPackaging",
+                "BatchNoOfFirstRelease"
+            ].forEach(function (sKey) {
+                var oInput = that.byId("track" + sKey);
+                if (oInput) {
+                    if (oInput.setValue) oInput.setValue("");
+                    if (oInput.setDateValue) oInput.setDateValue(null);
                 }
             });
-        }
 
-        return bMatch;
-    });
+            // destroy dynamic filters
+            var oFilterRows = this.byId("trackFilterRows");
+            oFilterRows.destroyItems();
+            this._trackDynamicFilters = {};
 
-    this._createTable("track", aFiltered);
-},
+            // refresh table
+            var aSource = (this._filteredData && this._filteredData.track)
+                ? this._filteredData.track
+                : this.getView().getModel().getData().track;
 
-       onTrackFilterReset: function () {
-    var that = this;
-
-    // reset default inputs (3 only)
-    [
-        "PackgingSiteComponentCode",
-        "BatchNoOfFirstPackaging",
-        "BatchNoOfFirstRelease"
-    ].forEach(function (sKey) {
-        var oInput = that.byId("track" + sKey);
-        if (oInput) {
-            if (oInput.setValue) oInput.setValue("");
-            if (oInput.setDateValue) oInput.setDateValue(null);
-        }
-    });
-
-    // destroy dynamic filters
-    var oFilterRows = this.byId("trackFilterRows");
-    oFilterRows.destroyItems();
-    this._trackDynamicFilters = {};
-
-    // refresh table
-    var aSource = (this._filteredData && this._filteredData.track)
-        ? this._filteredData.track
-        : this.getView().getModel().getData().track;
-
-    this._createTable("track", aSource);
-},
+            this._createTable("track", aSource);
+        },
 
         _parseDate: function (sValue) {
             if (!sValue) return null;
