@@ -26,3 +26,4 @@ Learn more at https://cap.cloud.sap/docs/get-started/.
 # UIApplication
 # ReportsUIApplication
 # ReportsWebApplication
+# ViatrisReport01
