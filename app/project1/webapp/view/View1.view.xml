@@ -297,6 +297,16 @@
                             liveChange=".onAuditFilter"
                         />
 
+                         <m:Label
+                            text="Componant Code:"
+                            class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
+                        />
+                        <m:Input
+                            id="auditCompCode"
+                            width="150px"
+                            liveChange=".onAuditFilter"
+                        />
+
                         <m:Label
                             text="Created By:"
                             class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
@@ -316,16 +326,7 @@
                             width="150px"
                             liveChange=".onAuditFilter"
                         />
-
-                        <m:Label
-                            text="Comp Code:"
-                            class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
-                        />
-                        <m:Input
-                            id="auditCompCode"
-                            width="150px"
-                            liveChange=".onAuditFilter"
-                        />
+                       
                     </m:HBox>
 
                     <!-- Buttons -->
@@ -352,6 +353,7 @@
                 <m:VBox id="auditFilterRows" />
             </m:VBox>
 
+
             <!-- 🔹 Activity Filters -->
             <m:HBox
                 id="activityFilterBar"
@@ -361,7 +363,7 @@
                 justifyContent="Start"
             >
                 <m:Label
-                    text="Packaging Site:"
+                    text="Packaging Site ID:"
                     class="sapUiTinyMarginEnd"
                 />
                 <m:Input
@@ -387,7 +389,7 @@
                 <m:DatePicker
                     id="activityLastActivityDate"
                     width="130px"
-                    valueFormat="yyyy-MM-dd"
+                    valueFormat="dd/MM/yyyy"
                     displayFormat="dd/MM/yyyy"
                     change=".onActivityFilter"
                 />
@@ -399,7 +401,7 @@
                 <m:DatePicker
                     id="activityTodayDate"
                     width="130px"
-                    valueFormat="yyyy-MM-dd"
+                    valueFormat="dd/MM/yyyy"
                     displayFormat="dd/MM/yyyy"
                     change=".onActivityFilter"
                 />

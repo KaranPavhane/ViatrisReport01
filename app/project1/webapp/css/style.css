@@ -9,14 +9,14 @@
     background-color: #dad5d5;
 }
 
-/* Row ke andar text wrap enable */
+/* wrap Row text */
 .wrapText {
     white-space: normal !important;
     line-height: normal !important;
     word-break: break-word !important;
 }
 
-/* Header text bhi wrap ho */
+/* wrap Header text */
 .sapUiTableColHdrCnt .sapMLabel {
     white-space: normal !important;
     word-break: break-word !important;

@@ -110,7 +110,6 @@ sap.ui.define([
             }
         },
 
-
         onFilterGo: function () {
 
             var oFrom = this.byId("fromDate").getDateValue();
@@ -155,15 +154,33 @@ sap.ui.define([
                         "modifiedBy"
                     ];
 
+                    // ✅ Date format helper (ISO + yyyy-mm-dd dono handle karega)
+                    function formatDate(value) {
+                        if (!value) return "";
+                        var oDate = new Date(value);
+                        if (isNaN(oDate.getTime())) return value; // agar parse fail ho to raw return
+                        var dd = String(oDate.getDate()).padStart(2, "0");
+                        var mm = String(oDate.getMonth() + 1).padStart(2, "0");
+                        var yyyy = oDate.getFullYear();
+                        return dd + "/" + mm + "/" + yyyy;  // ✅ dd/mm/yyyy format
+                    }
+
                     var aReordered = aSummary.map(function (item) {
                         var newObj = {};
                         aColumnOrder.forEach(function (key) {
-                            newObj[key] = item[key] || "";
+                            var val = item[key] || "";
+
+                            // ✅ Date/At fields ko format karo
+                            if (/date|at/i.test(key)) {
+                                newObj[key] = formatDate(val);
+                            } else {
+                                newObj[key] = val;
+                            }
                         });
                         return newObj;
                     });
 
-                    console.log("✅ Reordered Summary:", aReordered);
+                    console.log("✅ Reordered & Formatted Summary:", aReordered);
 
                     var oModel = that.getView().getModel();
                     oModel.setProperty("/summary", aReordered);
@@ -183,7 +200,8 @@ sap.ui.define([
                 }
             });
 
-            //Get Trackwise Report 
+
+            // Get Trackwise Report 
             $.ajax({
                 url: "/odata/v4/document/GetTrackwiseReport",
                 method: "POST",
@@ -210,16 +228,34 @@ sap.ui.define([
                         "Packaging Site Name"
                     ];
 
-                    // ✅ Reorder each row according to column order
+                    // ✅ Date format helper
+                    function formatDate(value) {
+                        if (!value) return "";
+                        var oDate = new Date(value);
+                        if (isNaN(oDate.getTime())) return value; // agar parse fail ho to raw value return
+                        var dd = String(oDate.getDate()).padStart(2, "0");
+                        var mm = String(oDate.getMonth() + 1).padStart(2, "0");
+                        var yyyy = oDate.getFullYear();
+                        return dd + "/" + mm + "/" + yyyy; // ✅ dd/mm/yyyy
+                    }
+
+                    // ✅ Reorder + Format dates
                     var aReordered = aTrack.map(function (item) {
                         var newObj = {};
                         aColumnOrder.forEach(function (key) {
-                            newObj[key] = item[key] || "";
+                            var val = item[key] || "";
+
+                            // agar column name me "Date" hai to format karo
+                            if (/date/i.test(key)) {
+                                newObj[key] = formatDate(val);
+                            } else {
+                                newObj[key] = val;
+                            }
                         });
                         return newObj;
                     });
 
-                    console.log("✅ Trackwise Report (Reordered):", aReordered);
+                    console.log("✅ Trackwise Report (Formatted):", aReordered);
 
                     // set to model
                     that.getView().getModel().setProperty("/track", aReordered);
@@ -236,6 +272,7 @@ sap.ui.define([
                 }
             });
 
+
             // Audit and Activity Data fetch
             $.ajax({
                 url: "/odata/v4/document/AuditTrial",
@@ -246,22 +283,38 @@ sap.ui.define([
                     var aAudit = res.value || [];
 
                     var aColumnOrder = [
-                        "batchNo",      
-                        "compCode",     
-                        "releaseDate",  
-                        "packingDate",  
-                        "createdAt",    
-                        "pkgSite",      
-                        "comments",     
-                        "createdBy",   
-                        "modifiedAt",  
-                        "modifiedBy"    
+                        "batchNo",
+                        "compCode",
+                        "releaseDate",
+                        "packingDate",
+                        "createdAt",
+                        "pkgSite",
+                        "comments",
+                        "createdBy",
+                        "modifiedAt",
+                        "modifiedBy"
                     ];
+
+                    // ✅ Date format helper
+                    function formatDate(value) {
+                        if (!value) return "";
+                        var oDate = new Date(value);
+                        if (isNaN(oDate.getTime())) return value;
+                        var dd = String(oDate.getDate()).padStart(2, "0");
+                        var mm = String(oDate.getMonth() + 1).padStart(2, "0");
+                        var yyyy = oDate.getFullYear();
+                        return dd + "/" + mm + "/" + yyyy;
+                    }
 
                     var aReorderedAudit = aAudit.map(function (item) {
                         var newObj = {};
                         aColumnOrder.forEach(function (key) {
-                            newObj[key] = item[key] || "";
+                            var val = item[key] || "";
+                            if (/date|at/i.test(key)) {   // ✅ agar key me "date" ya "at" hai
+                                newObj[key] = formatDate(val);
+                            } else {
+                                newObj[key] = val;
+                            }
                         });
                         return newObj;
                     });
@@ -269,13 +322,12 @@ sap.ui.define([
                     this.getView().getModel().setProperty("/audit", aReorderedAudit);
                     this._filteredData.audit = aReorderedAudit;
 
-                    console.log("✅ Audit Data (Reordered):", aReorderedAudit);
+                    console.log("✅ Audit Data (Formatted):", aReorderedAudit);
 
-                    
                     var aPkgSites = [...new Set(aReorderedAudit.map(item => item.pkgSite).filter(Boolean))];
                     var aCreatedBys = [...new Set(aReorderedAudit.map(item => item.createdBy).filter(Boolean))];
 
-                    // Activity fetch
+                    // ✅ Activity fetch
                     $.ajax({
                         url: "/odata/v4/document/activityReport",
                         method: "POST",
@@ -286,12 +338,25 @@ sap.ui.define([
                         }),
                         context: this,
                         success: function (oData) {
-                            console.log("✅ Activity Report Response:", oData);
+                            var aActivity = oData.value || oData;
 
-                            this._filteredData.activity = oData.value || oData;
+                            // ✅ Activity data me bhi date format
+                            var aFormattedActivity = aActivity.map(function (item) {
+                                var newObj = { ...item };
+                                ["lastActivityDate", "todayDate"].forEach(function (field) {
+                                    if (newObj[field]) {
+                                        newObj[field] = formatDate(newObj[field]);
+                                    }
+                                });
+                                return newObj;
+                            });
+
+                            this._filteredData.activity = aFormattedActivity;
 
                             var oLocalModel = new sap.ui.model.json.JSONModel(this._filteredData);
                             this.getView().setModel(oLocalModel, "local");
+
+                            console.log("✅ Activity Data (Formatted):", aFormattedActivity);
                         },
                         error: function (xhr, status, error) {
                             console.error("❌ Activity Report call failed:", xhr.responseText);
@@ -314,7 +379,7 @@ sap.ui.define([
             this.byId("tableContainer").setVisible(true);
             this.byId("downloadRow").setVisible(true);
 
-            this._createTable("summary", this._filteredData.summary);
+            this._createTable("summary", this._filteredData.summary); // after click on go default summary table create
 
             this.byId("summaryFilterBar").setVisible(false);
             this.byId("trackFilterBar").setVisible(false);
@@ -458,7 +523,7 @@ sap.ui.define([
                 selectionMode: "None",
                 enableColumnReordering: true,
                 width: "100%",   // ✅ Full width
-                rowHeight: 15
+                rowHeight: 25
             });
 
             if (!aData || aData.length === 0) {
@@ -517,6 +582,7 @@ sap.ui.define([
             this.byId("tableContainer").addItem(oTable);
         },
 
+        
         // showing select option for download 
         onDownloadPress: function (oEvent) {
             var that = this;
@@ -801,7 +867,7 @@ sap.ui.define([
                 oControl = new sap.m.DatePicker({
                     id: sFullId,
                     width: "150px",
-                    valueFormat: "yyyy-MM-dd",
+                    valueFormat: "dd/MM/yyyy",
                     displayFormat: "dd/MM/yyyy",
                     change: this.onSummaryFilter.bind(this)
                 }).addStyleClass("sapUiTinyMarginEnd")
@@ -832,7 +898,6 @@ sap.ui.define([
             oLastRow.addItem(oControl);
         },
 
-
         onSummaryFilter: function () {
             var that = this;
 
@@ -843,10 +908,9 @@ sap.ui.define([
             var aFiltered = aSource.filter(function (oItem) {
                 var bMatch = true;
 
-                // 🔹 Loop over all filter inputs (default + dynamic)
+                // 🔹 Collect all filters (dynamic + default)
                 var oAllFilters = Object.assign({}, that._summaryDynamicFilters || {});
 
-                // default filters bhi include kar do
                 ["batchNo", "compCode", "pkgSite", "createdBy", "comments", "modifiedBy"].forEach(function (sKey) {
                     var oInput = that.byId("filter" + sKey);
                     if (oInput) {
@@ -854,14 +918,15 @@ sap.ui.define([
                     }
                 });
 
-                // 🔹 Apply all filters
+                // 🔹 Apply filters
                 Object.keys(oAllFilters).forEach(function (sField) {
                     var oControl = oAllFilters[sField];
+
                     if (oControl instanceof sap.m.DatePicker) {
-                        var oVal = oControl.getDateValue();
-                        if (oVal) {
-                            var dField = that._parseDate(oItem[sField]);
-                            if (!dField || dField.toDateString() !== oVal.toDateString()) {
+                        var sVal = oControl.getValue(); // dd/MM/yyyy string
+                        if (sVal) {
+                            var sFieldVal = (oItem[sField] || "").trim();
+                            if (sFieldVal !== sVal) {   // ✅ direct string compare
                                 bMatch = false;
                             }
                         }
@@ -902,6 +967,7 @@ sap.ui.define([
 
             this._createTable("summary", aSource);
         },
+
 
         // ---------------- TRACK FILTERS ----------------
         onTrackAddFilter: function (oEvent) {
@@ -954,7 +1020,7 @@ sap.ui.define([
                 oControl = new sap.m.DatePicker({
                     id: sFullId,
                     width: "150px",
-                    valueFormat: "yyyy-MM-dd",
+                    valueFormat: "dd/MM/yyyy",
                     displayFormat: "dd/MM/yyyy",
                     change: this.onTrackFilter.bind(this)
                 }).addStyleClass("sapUiTinyMarginEnd")
@@ -1011,14 +1077,15 @@ sap.ui.define([
                         var oControl = that._trackDynamicFilters[sField];
                         if (oControl) {
                             if (oControl instanceof sap.m.DatePicker) {
-                                var oVal = oControl.getDateValue();
-                                if (oVal) {
-                                    var dField = that._parseDate(oItem[sField]);
-                                    if (!dField || dField.toDateString() !== oVal.toDateString()) {
+                                var sVal = oControl.getValue();
+                                if (sVal) {
+                                    var sFieldVal = (oItem[sField] || "").trim();
+                                    if (sFieldVal !== sVal) {
                                         bMatch = false;
                                     }
                                 }
-                            } else {
+                            }
+                            else {
                                 var sVal = (oControl.getValue() || "").toLowerCase();
                                 if (sVal) {
                                     var sFieldVal = (oItem[sField] || "").toLowerCase();
@@ -1040,7 +1107,6 @@ sap.ui.define([
         onTrackFilterReset: function () {
             var that = this;
 
-            // reset default inputs (3 only)
             [
                 "PackgingSiteComponentCode",
                 "BatchNoOfFirstPackaging",
@@ -1065,19 +1131,6 @@ sap.ui.define([
 
             this._createTable("track", aSource);
         },
-
-        _parseDate: function (sValue) {
-            if (!sValue) return null;
-            if (sValue instanceof Date) return sValue;
-
-            // assume format yyyy-MM-dd
-            var parts = sValue.split("-");
-            if (parts.length === 3) {
-                return new Date(parts[0], parts[1] - 1, parts[2]);
-            }
-            return new Date(sValue);
-        },
-
 
 
         //====================== Audit Filter ======================
@@ -1119,7 +1172,7 @@ sap.ui.define([
                 oControl = new sap.m.DatePicker({
                     id: sFullId,
                     width: "150px",
-                    valueFormat: "yyyy-MM-dd",
+                    valueFormat: "dd/MM/yyyy",
                     displayFormat: "dd/MM/yyyy",
                     change: this.onAuditFilter.bind(this)
                 }).addStyleClass("sapUiTinyMarginEnd")
@@ -1161,8 +1214,8 @@ sap.ui.define([
             var sModifiedBy = (this.byId("auditModifiedBy")?.getValue() || "").toLowerCase();
             var sCompCode = (this.byId("auditCompCode")?.getValue() || "").toLowerCase();
 
-            var dCreatedDate = this.byId("auditCreatedDate")?.getDateValue();
-            var dReleaseDate = this.byId("auditReleaseDate")?.getDateValue();
+            var sCreatedDate = this.byId("auditCreatedDate")?.getValue();
+            var sReleaseDate = this.byId("auditReleaseDate")?.getValue();
 
             var aFiltered = aBaseData.filter(function (oItem) {
                 var bMatch = true;
@@ -1172,23 +1225,26 @@ sap.ui.define([
                 if (sModifiedBy && !(oItem.modifiedBy || "").toLowerCase().includes(sModifiedBy)) bMatch = false;
                 if (sCompCode && !(oItem.compCode || "").toLowerCase().includes(sCompCode)) bMatch = false;
 
-                if (dCreatedDate) {
-                    var dVal = that._parseDate(oItem.createdDate || oItem.createdAt);
-                    if (!dVal || dVal.toDateString() !== dCreatedDate.toDateString()) bMatch = false;
+                if (sCreatedDate) {
+                    var fieldVal = (oItem.createdDate || oItem.createdAt || "").trim();
+                    if (fieldVal !== sCreatedDate) bMatch = false;
                 }
-                if (dReleaseDate) {
-                    var dVal2 = that._parseDate(oItem.releaseDate);
-                    if (!dVal2 || dVal2.toDateString() !== dReleaseDate.toDateString()) bMatch = false;
+
+                if (sReleaseDate) {
+                    var fieldVal2 = (oItem.releaseDate || "").trim();
+                    if (fieldVal2 !== sReleaseDate) bMatch = false;
                 }
 
                 // dynamic filters
                 Object.keys(that._auditDynamicFilters || {}).forEach(function (sField) {
                     var oCtrl = that._auditDynamicFilters[sField];
                     if (oCtrl instanceof sap.m.DatePicker) {
-                        var dVal = oCtrl.getDateValue();
-                        if (dVal) {
-                            var dField = that._parseDate(oItem[sField]);
-                            if (!dField || dField.toDateString() !== dVal.toDateString()) bMatch = false;
+                        var sVal = oCtrl.getValue();
+                        if (sVal) {
+                            var sFieldVal = (oItem[sField] || "").trim();
+                            if (sFieldVal !== sVal) {
+                                bMatch = false;
+                            }
                         }
                     } else if (oCtrl instanceof sap.m.Input) {
                         var sVal = (oCtrl.getValue() || "").toLowerCase();
@@ -1210,7 +1266,7 @@ sap.ui.define([
 
             ["CreatedDate", "ReleaseDate"].forEach(k => {
                 var oDP = this.byId("audit" + k);
-                if (oDP) oDP.setDateValue(null);
+                if (oDP) oDP.setValue(""); // reset DatePicker value as string
             });
 
             var oFilterRows = this.byId("auditFilterRows");
@@ -1220,13 +1276,7 @@ sap.ui.define([
             this._createTable("audit", this.getView().getModel().getData().audit);
         },
 
-        // helper
-        _parseDate: function (sValue) {
-            if (!sValue) return null;
-            if (sValue instanceof Date) return new Date(sValue.getFullYear(), sValue.getMonth(), sValue.getDate());
-            var d = new Date(sValue);
-            return isNaN(d) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
-        },
+
 
         // ---------------- ACTIVITY FILTERS ----------------
         onActivityFilter: function () {
@@ -1237,37 +1287,29 @@ sap.ui.define([
 
             var sPkgSite = this.byId("activityPkgSite").getValue().toLowerCase();
             var sCreatedBy = this.byId("activityCreatedBy").getValue().toLowerCase();
-            var dLastActivityDate = this.byId("activityLastActivityDate").getDateValue();
-            var dTodayDate = this.byId("activityTodayDate").getDateValue();
+            var sLastActivityDate = this.byId("activityLastActivityDate").getValue(); // dd/MM/yyyy string
+            var sTodayDate = this.byId("activityTodayDate").getValue(); // dd/MM/yyyy string
             var iDaysFromToday = this.byId("activityDaysFromToday").getValue();
-
-            var that = this;
 
             var aFiltered = aBaseData.filter(function (oItem) {
                 var bMatch = true;
 
                 if (sPkgSite && !(oItem.pkgSite || "").toLowerCase().includes(sPkgSite)) bMatch = false;
-                if (sCreatedBy && !(oItem.createdBy || "").toLowerCase().includes(sCreatedBy)) bMatch = false;
+                if (sCreatedBy && !(oItem.user || "").toLowerCase().includes(sCreatedBy)) bMatch = false;
 
-                if (dLastActivityDate) {
-                    var dValue = that._parseDate(oItem.lastActivityDate);
-                    if (!dValue || dValue.toDateString() !== dLastActivityDate.toDateString()) {
-                        bMatch = false;
-                    }
+                if (sLastActivityDate) {
+                    var sFieldVal = (oItem.lastActivityDate || "").trim();
+                    if (sFieldVal !== sLastActivityDate) bMatch = false;
                 }
 
-                if (dTodayDate) {
-                    var dVal = that._parseDate(oItem.todayDate);
-                    if (!dVal || dVal.toDateString() !== dTodayDate.toDateString()) {
-                        bMatch = false;
-                    }
+                if (sTodayDate) {
+                    var sFieldVal2 = (oItem.todayDate || "").trim();
+                    if (sFieldVal2 !== sTodayDate) bMatch = false;
                 }
 
                 if (iDaysFromToday) {
                     var iVal = parseInt(iDaysFromToday, 10);
-                    if (!isNaN(iVal) && oItem.daysFromToday !== iVal) {
-                        bMatch = false;
-                    }
+                    if (!isNaN(iVal) && oItem.daysFromToday !== iVal) bMatch = false;
                 }
 
                 return bMatch;
@@ -1279,24 +1321,11 @@ sap.ui.define([
         onActivityFilterReset: function () {
             this.byId("activityPkgSite").setValue("");
             this.byId("activityCreatedBy").setValue("");
-            this.byId("activityLastActivityDate").setDateValue(null);
-            this.byId("activityTodayDate").setDateValue(null);
+            this.byId("activityLastActivityDate").setValue(""); // reset DatePicker as string
+            this.byId("activityTodayDate").setValue("");       // reset DatePicker as string
             this.byId("activityDaysFromToday").setValue("");
 
             this._createTable("activity", this._filteredData.activity || []);
-        },
-
-        _parseDate: function (sValue) {
-            if (!sValue) return null;
-            if (sValue instanceof Date) return sValue;
-
-            if (typeof sValue === "string") {
-                var parts = sValue.split("-");
-                if (parts.length === 3) {
-                    return new Date(parts[0], parts[1] - 1, parts[2]);
-                }
-            }
-            return new Date(sValue);
         }
 
     });
