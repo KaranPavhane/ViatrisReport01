@@ -12,7 +12,7 @@
         showHeader="false"
     >
         <m:content>
-            <!-- 🔹 Filter Bar -->
+<!-- Filter Bar -->
             <m:HBox
                 id="filterBar"
                 class="sapUiSmallMarginTop customFilterBarBg"
@@ -39,31 +39,31 @@
                 </l:VerticalLayout>
 
                 <m:HBox alignItems="Center">
-                   <m:Label
-    text="From Date:"
-    class="sapUiSmallMarginEnd"
-/>
-<m:DatePicker
-    id="fromDate"
-    width="130px"
-    placeholder="dd/mm/yyyy"
-    displayFormat="dd/MM/yyyy"
-    valueFormat="yyyy-MM-dd"
-    change=".onFromDateChange"
-/>
+                    <m:Label
+                        text="From Date:"
+                        class="sapUiSmallMarginEnd"
+                    />
+                    <m:DatePicker
+                        id="fromDate"
+                        width="130px"
+                        placeholder="dd/mm/yyyy"
+                        displayFormat="dd/MM/yyyy"
+                        valueFormat="yyyy-MM-dd"
+                        change=".onFromDateChange"
+                    />
 
-<m:Label
-    text="To Date:"
-    class="sapUiSmallMarginBegin sapUiSmallMarginEnd"
-/>
-<m:DatePicker
-    id="toDate"
-    width="130px"
-    placeholder="dd/mm/yyyy"
-    displayFormat="dd/MM/yyyy"
-    valueFormat="yyyy-MM-dd"
-    change=".onToDateChange"
-/>
+                    <m:Label
+                        text="To Date:"
+                        class="sapUiSmallMarginBegin sapUiSmallMarginEnd"
+                    />
+                    <m:DatePicker
+                        id="toDate"
+                        width="130px"
+                        placeholder="dd/mm/yyyy"
+                        displayFormat="dd/MM/yyyy"
+                        valueFormat="yyyy-MM-dd"
+                        change=".onToDateChange"
+                    />
 
                     <m:Button
                         text="Go"
@@ -80,6 +80,7 @@
                 </m:HBox>
             </m:HBox>
 
+<!-- Icons Tab Bar -->
             <m:IconTabBar
                 id="cardsRow"
                 select=".onIconTabSelect"
@@ -122,12 +123,12 @@
                 </m:items>
             </m:IconTabBar>
 
+<!-- Summary Filters Logic -->
             <m:VBox
                 id="summaryFilterBar"
                 class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin icons"
                 visible="false"
             >
-                <!-- 🔹 Default filters row + Buttons -->
                 <m:HBox
                     alignItems="Center"
                     justifyContent="SpaceBetween"
@@ -178,7 +179,7 @@
                         />
                     </m:HBox>
 
-                    <!-- 🔹 Buttons fixed on right -->
+                    <!-- Summary Buttons -->
                     <m:HBox
                         alignItems="Center"
                         justifyContent="End"
@@ -197,11 +198,11 @@
                         />
                     </m:HBox>
                 </m:HBox>
-
-                <!-- 🔹 Dynamic filters rows (added by controller) -->
+                <!-- Summary Dynamic filters rows -->
                 <m:VBox id="filterRows" />
             </m:VBox>
 
+<!-- Track Filters Logic -->
             <m:VBox
                 id="trackFilterBar"
                 class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin icons"
@@ -212,7 +213,6 @@
                     justifyContent="SpaceBetween"
                     class="sapUiTinyMarginBottom"
                 >
-                    <!-- 🔹 Default Filters (3 only) -->
                     <m:HBox
                         alignItems="Center"
                         justifyContent="Start"
@@ -248,7 +248,7 @@
                         />
                     </m:HBox>
 
-                    <!-- 🔹 Buttons -->
+                    <!-- Track Buttons -->
                     <m:HBox
                         alignItems="Center"
                         justifyContent="End"
@@ -268,10 +268,12 @@
                     </m:HBox>
                 </m:HBox>
 
-                <!-- 🔹 Dynamic filters rows -->
+                <!-- Track Dynamic filters rows -->
                 <m:VBox id="trackFilterRows" />
             </m:VBox>
 
+
+<!-- Audit Filter Logic -->
             <m:VBox
                 id="auditFilterBar"
                 class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin"
@@ -297,7 +299,7 @@
                             liveChange=".onAuditFilter"
                         />
 
-                         <m:Label
+                        <m:Label
                             text="Componant Code:"
                             class="sapUiTinyMarginBegin sapUiTinyMarginEnd"
                         />
@@ -326,10 +328,9 @@
                             width="150px"
                             liveChange=".onAuditFilter"
                         />
-                       
                     </m:HBox>
 
-                    <!-- Buttons -->
+                    <!-- Audit Buttons -->
                     <m:HBox
                         alignItems="Center"
                         justifyContent="End"
@@ -349,12 +350,11 @@
                     </m:HBox>
                 </m:HBox>
 
-                <!-- Dynamic filters rows -->
+                <!-- Audit Dynamic filters rows -->
                 <m:VBox id="auditFilterRows" />
             </m:VBox>
 
-
-            <!-- 🔹 Activity Filters -->
+<!-- Activity Filters Logic -->
             <m:HBox
                 id="activityFilterBar"
                 class="sapUiTinyMarginTop sapUiTinyMarginBottom sapUiContentPadding sapUiMediumMarginBegin icons"
@@ -368,7 +368,7 @@
                 />
                 <m:Input
                     id="activityPkgSite"
-                    width="130px"
+                    width="120px"
                     liveChange=".onActivityFilter"
                 />
 
@@ -378,7 +378,7 @@
                 />
                 <m:Input
                     id="activityCreatedBy"
-                    width="130px"
+                    width="120px"
                     liveChange=".onActivityFilter"
                 />
 
@@ -388,7 +388,7 @@
                 />
                 <m:DatePicker
                     id="activityLastActivityDate"
-                    width="130px"
+                    width="150px"
                     valueFormat="dd/MM/yyyy"
                     displayFormat="dd/MM/yyyy"
                     change=".onActivityFilter"
@@ -400,7 +400,7 @@
                 />
                 <m:DatePicker
                     id="activityTodayDate"
-                    width="130px"
+                    width="150px"
                     valueFormat="dd/MM/yyyy"
                     displayFormat="dd/MM/yyyy"
                     change=".onActivityFilter"
@@ -413,7 +413,7 @@
                 <m:Input
                     id="activityDaysFromToday"
                     type="Number"
-                    width="100px"
+                    width="80px"
                     liveChange=".onActivityFilter"
                 />
 
@@ -425,20 +425,12 @@
                 />
             </m:HBox>
 
-            <!-- 🔹 Table Container (hidden initially) -->
+<!-- Table hidden initially -->
             <m:VBox
                 id="tableContainer"
                 class="sapUiSmallMarginTop sapUiSmallMarginButtom icons"
             />
 
-            <!-- 🔹 Download Button Row (hidden initially) -->
-            <m:HBox
-                id="downloadRow"
-                justifyContent="End"
-                class="sapUiSmallMarginTop sapUiLargeMarginEnd"
-            >
-                <!-- <m:Button text="Download" press=".onDownloadPress" type="Ghost"/> -->
-            </m:HBox>
         </m:content>
     </m:Page>
 </mvc:View>

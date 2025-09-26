@@ -69,7 +69,7 @@ sap.ui.define([
             this.byId("filterBar").setVisible(true);
             this.byId("cardsRow").setVisible(false);
             this.byId("tableContainer").setVisible(false);
-            this.byId("downloadRow").setVisible(false);
+           // this.byId("downloadRow").setVisible(false);
         },
 
         onProductInputClick: function (oEvent) {
@@ -110,6 +110,7 @@ sap.ui.define([
             }
         },
 
+// After Click on Go button (showing default summary Data)
         onFilterGo: function () {
 
             var oFrom = this.byId("fromDate").getDateValue();
@@ -180,7 +181,7 @@ sap.ui.define([
                         return newObj;
                     });
 
-                    console.log("✅ Reordered & Formatted Summary:", aReordered);
+                    console.log("Summary Data:", aReordered);
 
                     var oModel = that.getView().getModel();
                     oModel.setProperty("/summary", aReordered);
@@ -377,7 +378,7 @@ sap.ui.define([
             this.byId("cardsRow").setVisible(true);
             this.byId("cardsRow").setSelectedKey("summary");
             this.byId("tableContainer").setVisible(true);
-            this.byId("downloadRow").setVisible(true);
+          //  this.byId("downloadRow").setVisible(true);
 
             this._createTable("summary", this._filteredData.summary); // after click on go default summary table create
 
@@ -389,14 +390,7 @@ sap.ui.define([
             this.byId("summaryFilterBar").setVisible(true);
         },
 
-        _parseDate: function (sDate) {
-            if (!sDate) return null;
-            var parts = sDate.split("/"); // dd/mm/yyyy
-            if (parts.length !== 3) return null;
-            return new Date(parts[2], parts[1] - 1, parts[0]);
-        },
-
-        // after click on reset button
+// after click on reset button (reset all the data )
         onFilterReset: function () {
 
             this.byId("productInput").removeAllTokens();
@@ -406,38 +400,17 @@ sap.ui.define([
 
             this.byId("cardsRow").setVisible(false);
             this.byId("tableContainer").setVisible(false);
-            this.byId("downloadRow").setVisible(false);
 
             this.byId("summaryFilterBar").setVisible(false);
             this.byId("trackFilterBar").setVisible(false);
             this.byId("auditFilterBar").setVisible(false);
             this.byId("activityFilterBar").setVisible(false);
 
-            this.byId("filterBatchNo").setValue("");
-            this.byId("filterComponent").setValue("");
-            this.byId("filterSite").setValue("");
-            this.byId("filterCreatedBy").setValue("");
-
-            if (this.byId("trackComponent")) this.byId("trackComponent").setValue("");
-            if (this.byId("trackBatchFirst")) this.byId("trackBatchFirst").setValue("");
-            if (this.byId("trackDateFirst")) this.byId("trackDateFirst").setValue("");
-            if (this.byId("trackBatchRelease")) this.byId("trackBatchRelease").setValue("");
-
-            if (this.byId("auditUser")) this.byId("auditUser").setValue("");
-            if (this.byId("auditAction")) this.byId("auditAction").setValue("");
-            if (this.byId("auditDate")) this.byId("auditDate").setValue("");
-            if (this.byId("auditSite")) this.byId("auditSite").setValue("");
-
-            if (this.byId("activitySite")) this.byId("activitySite").setValue("");
-            if (this.byId("activityDetail")) this.byId("activityDetail").setValue("");
-            if (this.byId("activityCreatedBy")) this.byId("activityCreatedBy").setValue("");
-            if (this.byId("activityCreatedDate")) this.byId("activityCreatedDate").setValue("");
-
             this._filteredData = null;
             this._currentKey = null;
         },
 
-        // select icon Tabs
+// select icon Tabs
         onIconTabSelect: function (oEvent) {
             var sKey = oEvent.getParameter("key");
             this._currentKey = sKey;
@@ -476,23 +449,6 @@ sap.ui.define([
             this._createTable(sKey, aData);
         },
 
-        // after click on cards set Visible true
-        onCardPress: function (oEvent) {
-            // ✅ IconTabBar se key directly aata hai
-            var sKey = oEvent.getParameter("key");
-            this._currentKey = sKey;
-
-            // abhi sirf tab select pe table show hoga
-            this.byId("tableContainer").setVisible(true);
-            this.byId("downloadRow").setVisible(true);
-
-            var oModel = this.getView().getModel();
-            var aData = (this._filteredData && this._filteredData[sKey])
-                ? this._filteredData[sKey]
-                : oModel.getData()[sKey];
-
-            this._createTable(sKey, aData);
-        },
 
         // Create Table
         _createTable: function (sKey, aData) {
@@ -582,7 +538,7 @@ sap.ui.define([
             this.byId("tableContainer").addItem(oTable);
         },
 
-        
+
         // showing select option for download 
         onDownloadPress: function (oEvent) {
             var that = this;
@@ -819,13 +775,13 @@ sap.ui.define([
             }, 700);
         },
 
-        // ---------------- SUMMARY FILTERS ----------------
+// ---------------- SUMMARY FILTERS ----------------
         onAddFilterPress: function (oEvent) {
             var that = this;
 
             if (!this._oFilterSheet) {
                 var aFields = [
-                    "releaseDate", "packingDate", "createdDate", "createdAt", "modifiedAt",
+                    "releaseDate", "packingDate", "createdAt", "modifiedAt",
                     "comments", "modifiedBy"
                 ];
 
@@ -846,6 +802,7 @@ sap.ui.define([
             this._oFilterSheet.openBy(oEvent.getSource());
         },
 
+
         _addFilterField: function (sField) {
             this._summaryDynamicFilters = this._summaryDynamicFilters || {};
 
@@ -861,7 +818,7 @@ sap.ui.define([
             }).addStyleClass("sapUiTinyMarginEnd");
 
             var oControl;
-            var aDateFields = ["releaseDate", "packingDate", "createdDate", "modifiedAt", "createdAt"];
+            var aDateFields = ["releaseDate", "packingDate", "modifiedAt", "createdAt"];
 
             if (aDateFields.includes(sField)) {
                 oControl = new sap.m.DatePicker({
@@ -1154,6 +1111,7 @@ sap.ui.define([
             this._oAuditFilterSheet.openBy(oEvent.getSource());
         },
 
+
         _addAuditFilterField: function (sField, bIsDate) {
             this._auditDynamicFilters = this._auditDynamicFilters || {};
 
@@ -1277,8 +1235,8 @@ sap.ui.define([
         },
 
 
-
         // ---------------- ACTIVITY FILTERS ----------------
+
         onActivityFilter: function () {
             var oModel = this.getView().getModel();
             var aBaseData = (this._filteredData && this._filteredData.activity)
@@ -1287,8 +1245,8 @@ sap.ui.define([
 
             var sPkgSite = this.byId("activityPkgSite").getValue().toLowerCase();
             var sCreatedBy = this.byId("activityCreatedBy").getValue().toLowerCase();
-            var sLastActivityDate = this.byId("activityLastActivityDate").getValue(); // dd/MM/yyyy string
-            var sTodayDate = this.byId("activityTodayDate").getValue(); // dd/MM/yyyy string
+            var sLastActivityDate = this.byId("activityLastActivityDate").getValue(); 
+            var sTodayDate = this.byId("activityTodayDate").getValue(); 
             var iDaysFromToday = this.byId("activityDaysFromToday").getValue();
 
             var aFiltered = aBaseData.filter(function (oItem) {
@@ -1318,12 +1276,13 @@ sap.ui.define([
             this._createTable("activity", aFiltered);
         },
 
+
         onActivityFilterReset: function () {
             this.byId("activityPkgSite").setValue("");
             this.byId("activityCreatedBy").setValue("");
-            this.byId("activityLastActivityDate").setValue(""); // reset DatePicker as string
-            this.byId("activityTodayDate").setValue("");       // reset DatePicker as string
-            this.byId("activityDaysFromToday").setValue("");
+            this.byId("activityLastActivityDate").setValue("");
+            this.byId("activityTodayDate").setValue("");       
+            this.byId("activity DaysFromToday").setValue("");
 
             this._createTable("activity", this._filteredData.activity || []);
         }
